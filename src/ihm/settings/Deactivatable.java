@@ -1,4 +1,4 @@
-package Settings;
+package ihm.settings;
 
 public interface Deactivatable {
 }
