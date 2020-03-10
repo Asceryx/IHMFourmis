@@ -18,11 +18,18 @@ public class Grid extends Fourmiliere {
     public Grid(int width, int height, Fourmiliere initAntHill) {
         super(width,height);
         this.antHill = initAntHill;
+
+        this.width = width;
+        this.height = height;
+        generateBlankGrid();
+    }
+
+    public void generateBlankGrid() {
         this.listCell = new ArrayList();
-        for(int i = 0; i<width; i++)
+        for(int i = 0; i<this.width; i++)
         {
             ArrayList<Cell> lineCell = new ArrayList();
-            for(int j = 0; j<height; j++)
+            for(int j = 0; j<this.height; j++)
             {
                 Cell cell = new Cell(10 + i*Cell.SIZE, 10 + j*Cell.SIZE);
                 // Decalage de 10px, pour voir les bordures
@@ -30,8 +37,6 @@ public class Grid extends Fourmiliere {
             }
             this.listCell.add(lineCell);
         }
-        this.width = width;
-        this.height = height;
     }
 
     public ArrayList<ArrayList<Cell>> getListCell() {
@@ -43,7 +48,6 @@ public class Grid extends Fourmiliere {
     }
 
     public void showGrid(Graphics2D grid, boolean showCell) {
-        System.out.println(showCell);
         for (int i = 0; i < this.width; i++)
             for (int j = 0; j < this.height; j++) {
                 getCell(i, j).paintCell(grid, antHill.getQteGraines(i,j), antHill.getMur(i,j));
@@ -56,11 +60,9 @@ public class Grid extends Fourmiliere {
                 if (antFind.isPresent()) {
                     getCell(i, j).paintAnt(grid, antFind.get());
                 }
-                if (showCell == true) {
+                if (showCell) {
                     getCell(i, j).drawCell(grid);
                 }
             }
     }
-
-
 }

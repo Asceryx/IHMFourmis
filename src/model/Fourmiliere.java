@@ -27,7 +27,9 @@ public class Fourmiliere {
     private boolean murs[][];
     private boolean fourmis[][]; 
     private int qteGraines[][];
-    private static final int QMAX = 4;  	
+    private static final int QMAX = 4;
+    private int totalGraine;
+    private int totalFourmis;
 
     /**
      * Crée une fourmiliere de largeur l et de hauteur h. 
@@ -39,11 +41,13 @@ public class Fourmiliere {
 	hauteur = h;
 
 	this.lesFourmis = new ArrayList<Fourmi>();
+	this.totalGraine = 0;
+	this.totalFourmis = 0;
 
 	fourmis = new boolean[hauteur+2][largeur+2];
 	for (int i =0 ; i < hauteur+2 ; i++)
 	    for (int j =0 ; j < largeur+2 ; j++)
-		fourmis[i][j] = false ; 
+		fourmis[i][j] = false ;
 
 	murs = new boolean[hauteur+2][largeur+2];
 	for (int i =0 ; i < hauteur+2 ; i++)
@@ -53,8 +57,10 @@ public class Fourmiliere {
 	qteGraines = new int[hauteur+2][largeur+2];
 	for (int i =0 ; i < hauteur+2 ; i++)
 	    for (int j =0 ; j < largeur+2; j++)
-		qteGraines [i][j]=0 ; 
+		qteGraines [i][j]=0 ;
     }
+
+
     
     /**
      * Retourne la largeur de la fourmiliere
@@ -113,6 +119,7 @@ public class Fourmiliere {
 	    Fourmi f = new Fourmi(x,y,false);
 	    fourmis[x][y]=true ; 			
 	    lesFourmis.add(f);
+		this.totalFourmis +=1;
 	};
     }
 		
@@ -133,8 +140,9 @@ public class Fourmiliere {
      * @param qte	le nombre de graines que l'on souhaite poser
      */
     public void setQteGraines(int x, int y, int qte) {
-	assert (qte >=0 && qte <=QMAX); 
-	this.qteGraines[x][y]=qte;
+    	assert (qte >=0 && qte <=QMAX);
+    	this.qteGraines[x][y]=qte;
+    	this.totalGraine +=qte;
     }
 
     /**
@@ -295,28 +303,14 @@ public class Fourmiliere {
 	return res ; 
     }
 
-    public int totalSeed()
+    public int getTotalSeed()
 	{
-		int seed = 0;
-		for (int i =0 ; i < hauteur+2 ; i++) {
-			for (int j = 0; j < largeur + 2; j++) {
-				seed += getQteGraines(i,j);
-			}
-		}
-		return seed;
+		return this.totalGraine;
 	}
 
-	public int totalAnt()
+	public int getTotalAnt()
 	{
-		int ant = 0;
-		for (int i =0 ; i < hauteur+2 ; i++) {
-			for (int j = 0; j < largeur + 2; j++) {
-				if (contientFourmi(i, j)) {
-					ant++;
-				}
-			}
-		}
-		return ant;
+		return this.totalFourmis;
 	}
 
 	public List<Fourmi> getLesFourmis() {
@@ -330,10 +324,13 @@ public class Fourmiliere {
 		for(int i = 1; i<width+1; i++) {
 			for(int j = 1; j<height+1; j++) {
 				if(new Random().nextInt(probSeed) == 0) {
-					f.setQteGraines(i, j, new Random().nextInt(QMAX)+1);
+					int graine = new Random().nextInt(QMAX)+1;
+					f.setQteGraines(i, j, graine);
+
 				}
 				else if (new Random().nextInt(probAnt) == 0) {
 					f.ajouteFourmi(i, j);
+
 				}
 				else if (new Random().nextInt(probWall) == 0) {
 					f.setMur(i, j, true);

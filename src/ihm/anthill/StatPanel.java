@@ -12,7 +12,7 @@ public class StatPanel extends JPanel implements Hidden {
     private JPanel panelButton;
     private ResetButton reset;
 
-    public StatPanel() {
+    public StatPanel(GridPanel gridpanel) {
         panelLabel = new JPanel();
         panelButton = new JPanel();
         panelLabel.setLayout(new BoxLayout(panelLabel,BoxLayout.PAGE_AXIS));
@@ -23,7 +23,7 @@ public class StatPanel extends JPanel implements Hidden {
         panelLabel.add(nbSeed);
         panelLabel.add(nbAnt);
 
-        reset = new ResetButton();
+        reset = new ResetButton(gridpanel,nbSeed,nbAnt);
         panelButton.add(reset,BorderLayout.CENTER);
 
         this.setLayout(new BorderLayout());
@@ -31,10 +31,20 @@ public class StatPanel extends JPanel implements Hidden {
         this.add(panelButton,BorderLayout.EAST);
     }
 
+    public StatLabel getNbAnt()
+    {
+        return nbAnt;
+    }
+
+    public StatLabel getNbSeed()
+    {
+        return nbSeed;
+    }
+
     public static void main (String [] args) {
         JFrame frame = new JFrame("Test StatPanel");
 
-        frame.add(new StatPanel());
+        //frame.add(new StatPanel());
         frame.setDefaultCloseOperation (EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);

@@ -5,7 +5,7 @@ import model.Fourmi;
 import java.awt.*;
 
 public class Cell {
-    public static final int SIZE = 10;
+    public static final int SIZE = 5;
     private int X;
     private int Y;
 

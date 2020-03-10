@@ -15,21 +15,25 @@ public class GridPanel extends JPanel implements ActionListener {
     private Fourmiliere antHill;
     private int sizeW;
     private int sizeH;
+    private int width;
+    private int height;
     private boolean hideGrid;
 
-    public GridPanel(int width, int height) {
+    public GridPanel(int width, int height, int dimGridX, int dimGridY) {
         super();
         this.setBorder(BorderFactory.createLineBorder(Color.black, 2));
-        this.sizeW = width;
-        this.sizeH = height;
-        this.antHill = Fourmiliere.generate(width-2, height-2,10,40,2);
+        this.sizeW = dimGridX;
+        this.sizeH = dimGridY;
+        this.width= width;
+        this.height = height;
+        this.antHill = Fourmiliere.generate(dimGridX-2, dimGridY-2,40,40,40);
         this.hideGrid = false;
         new Timer(100, this).start();
     }
 
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(500,500 );
+        return new Dimension(this.width,this.height );
     }
 
     @Override
@@ -40,13 +44,41 @@ public class GridPanel extends JPanel implements ActionListener {
         this.grid.showGrid(this.board, this.hideGrid);
     }
 
-    public void switchHideGrid() {
-        this.hideGrid = !this.hideGrid;
+    public void switchHideGrid()
+    {
+        this.hideGrid = !(this.hideGrid);
     }
+
+    public Grid getGrid()
+    {
+        return this.grid;
+    }
+
+    public Graphics2D getBoard()
+    {
+        return this.board;
+    }
+
+    public Fourmiliere getAntHill()
+    {
+        return this.antHill;
+    }
+
+    public boolean gethideGrid()
+    {
+        return this.hideGrid;
+    }
+
+    public void resetPanel()
+    {
+        this.antHill = new Fourmiliere(this.sizeW-2,this.sizeH-2);
+        repaint();
+    }
+
 
     public static void main (String [] args) {
         JFrame frame = new JFrame("Test grid");
-        GridPanel gp =  new GridPanel(10,10);
+        GridPanel gp =  new GridPanel(500,500,10,10);
         frame.add(gp);
         frame.setDefaultCloseOperation (EXIT_ON_CLOSE);
         frame.pack();
@@ -55,7 +87,6 @@ public class GridPanel extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("Hello");
         this.hideGrid = true;
         this.antHill.evolue();
         repaint();
