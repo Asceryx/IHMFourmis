@@ -1,4 +1,4 @@
 package ihm.settings;
-
-public class ValidateButton {
+// First commit wadie
+public class ValidateButton  {
 }
