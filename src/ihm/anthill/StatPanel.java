@@ -5,14 +5,14 @@ import java.awt.BorderLayout;
 
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 
-public class StatPanel extends JPanel implements Hidden {
+public class StatPanel extends JPanel {
     private StatLabel nbAnt;
     private StatLabel nbSeed;
     private JPanel panelLabel;
     private JPanel panelButton;
     private ResetButton reset;
 
-    public StatPanel(GridPanel gridpanel) {
+    public StatPanel(GridComponent gridpanel) {
         panelLabel = new JPanel();
         panelButton = new JPanel();
         panelLabel.setLayout(new BoxLayout(panelLabel,BoxLayout.PAGE_AXIS));
@@ -43,8 +43,9 @@ public class StatPanel extends JPanel implements Hidden {
 
     public static void main (String [] args) {
         JFrame frame = new JFrame("Test StatPanel");
-
-        //frame.add(new StatPanel());
+        GridComponent g = new GridComponent(300,300);
+        g.generation(30,30,30);
+        frame.add(new StatPanel(g));
         frame.setDefaultCloseOperation (EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
