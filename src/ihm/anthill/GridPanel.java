@@ -22,7 +22,7 @@ public class GridPanel extends JPanel implements ActionListener {
         this.setBorder(BorderFactory.createLineBorder(Color.black, 2));
         this.sizeW = width;
         this.sizeH = height;
-        this.antHill = Fourmiliere.generate(width-2, height-2,10,40,2);
+        this.antHill = Fourmiliere.generate(width-2, height-2,10,20,40);
         this.hideGrid = false;
         new Timer(100, this).start();
     }

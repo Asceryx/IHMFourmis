@@ -1,4 +1,17 @@
 package ihm.settings;
 
-public class FormLabelText {
+import javax.swing.*;
+import java.awt.*;
+
+public class FormLabelText extends JLabel {
+    public Font font ;
+    private String text ;
+    public FormLabelText(String text)
+    {
+        super();
+        font=new Font("Serif",Font.ITALIC,14);
+        this.setFont(font);
+        this.setText(text);
+
+    }
 }
