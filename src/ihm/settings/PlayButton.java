@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 
 
 
-public class PlayButton extends JButton {
+public class PlayButton extends JButton  {
 ButtonIcon start ;
 ButtonIcon pause;
 private static boolean isPlay;
@@ -70,5 +70,6 @@ public  PlayButton()
         test.pack();
         test.setVisible(true);
     }
+
 
 }

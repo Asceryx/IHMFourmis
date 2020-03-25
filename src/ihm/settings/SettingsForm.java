@@ -2,6 +2,8 @@ package ihm.settings;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class SettingsForm extends JPanel {
     public FormLabelText parametre;
@@ -14,6 +16,7 @@ public class SettingsForm extends JPanel {
     public JTextField txt2;
     public JTextField txt3;
     public JTextField txt4;
+    public int val1,val2,val3,val4;
 
     public SettingsForm()
     {   super();
@@ -27,10 +30,10 @@ public class SettingsForm extends JPanel {
         probabiliteF=new FormLabelText("Probabilité de Fourmi :");
         probabiliteMur=new FormLabelText("Probabilité de mur :");
         valider=new ValidateButton();
-        txt1=new JTextField("20");
-        txt2=new JTextField("20");
-        txt3=new JTextField("20");
-        txt4=new JTextField("20");
+        txt1=new JTextField(""+val1);
+        txt2=new JTextField(""+val2);
+        txt3=new JTextField(""+val3);
+        txt4=new JTextField(""+val4);
 
        box.add(parametre);
        box.add(taille);
@@ -43,6 +46,38 @@ public class SettingsForm extends JPanel {
        box.add(txt4);
        this.add(box);
 
+    }
+    public int getVal1()
+    {
+        return val1;
+    }
+    public int getVal2()
+    {
+        return val2;
+    }
+    public int getVal3()
+    {
+        return val3;
+    }
+    public int getVal4()
+    {
+        return val4;
+    }
+    public void setVal1(int val1)
+    {
+        this.val1=val1;
+    }
+    public void setVal2(int val2)
+    {
+        this.val2=val2;
+    }
+    public void setVal3(int val3)
+    {
+        this.val3=val3;
+    }
+    public void setVal4(int val4)
+    {
+        this.val4=val4;
     }
     public static void main(String []args)
     {

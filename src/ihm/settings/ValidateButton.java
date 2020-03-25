@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 // First commit wadie
-public class ValidateButton extends JButton {
+public class ValidateButton extends JButton implements Deactivatable {
     /* public JButton valider;*/
      private Font font;
 
@@ -19,4 +19,10 @@ public class ValidateButton extends JButton {
         box.add(this);
 
      }
+
+
+    @Override
+    public void setEditable(boolean b) {
+
+    }
 }
