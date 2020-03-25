@@ -5,7 +5,7 @@ import model.Fourmi;
 import java.awt.*;
 
 public abstract class Cell {
-    public static final int SIZE_OF_CELL = 5;
+    public static final int SIZE_OF_CELL = 50;
     protected int x;
     protected int y;
     protected boolean border;

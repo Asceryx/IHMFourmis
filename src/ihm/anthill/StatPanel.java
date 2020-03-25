@@ -41,6 +41,7 @@ public class StatPanel extends JPanel {
         return nbSeed;
     }
 
+
     public static void main (String [] args) {
         JFrame frame = new JFrame("Test StatPanel");
         GridComponent g = new GridComponent(300,300);

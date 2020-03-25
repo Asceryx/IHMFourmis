@@ -19,6 +19,7 @@ public class ResetButton extends JButton implements ActionListener {
         this.panel = gridpanel;
         this.LabelAnt = nbAnt;
         this.LabelSeed = nbSeed;
+        this.setFocusable(false);
         addActionListener(this);
     }
 

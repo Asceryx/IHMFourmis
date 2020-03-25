@@ -147,7 +147,6 @@ public class Fourmiliere {
 	public void setQteGraines(int x, int y, int qte) {
 		assert (qte >=0 && qte <=QMAX);
 		this.qteGraines[x][y]=qte;
-		this.totalGraine +=qte;
 	}
 
 	/**
@@ -249,7 +248,7 @@ public class Fourmiliere {
 					f.pose();
 					qteGraines[deltaX][deltaY]++;
 				}
-			};
+			}
 		}
 	}
 
@@ -276,7 +275,7 @@ public class Fourmiliere {
 			res = res + "\n";
 		}
 		return res ;
-	};
+	}
 
 	/**
 	 * Retourne une chaine affichant les fourmis sur le terrain
@@ -313,8 +312,13 @@ public class Fourmiliere {
 		return res ;
 	}
 
-	public int getTotalSeed()
-	{
+	public int getTotalSeed() {
+		this.totalGraine = 0;
+		for (int i = 0; i < hauteur + 2; i++) {
+			for (int j = 0; j < largeur + 2; j++) {
+				this.totalGraine += qteGraines[i][j];
+			}
+		}
 		return this.totalGraine;
 	}
 

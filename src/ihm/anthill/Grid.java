@@ -9,13 +9,39 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-
+/**
+ * <b>Class representing a graphical representation for anthill grid.</b>
+ * <p>
+ *     Based on fourmiliere.
+ * </p>
+ * @see Fourmiliere
+ *
+ * @author Julien Hayrault
+ * @version 1.0
+ */
 public class Grid extends Fourmiliere {
+    /**
+     * Two dimensional list of drawing component.
+     *
+     * @see Cell
+     * @see Wall
+     * @see Case
+     */
     private List<List<Cell>> grid;
 
+    /**
+     * Constructor of Grid.
+     * <p>
+     *     Initialize wall and blank case.
+     *     Initialization is based on array created in parent class Fourmiliere.
+     *     The grid is initialized with a Wall border. The other Cell are initialized empty.
+     * </p>
+     *
+     * @param width
+     * @param height
+     */
     public Grid(int width, int height) {
         super(width, height);
-        // Génération de la grid
         this.grid = new ArrayList();
 
 
@@ -31,13 +57,30 @@ public class Grid extends Fourmiliere {
             }
             this.grid.add(line);
         }
-
     }
 
+    /**
+     * Getter of a Cell in  a Grid.
+     *
+     * @param line
+     * @param column
+     *
+     * @return The cell designated by the coordinates.
+     */
     public Cell getCell(int line, int column) {
         return this.grid.get(line).get(column);
     }
 
+    /**
+     * Set a Wall at the designated coordinate.
+     * <p>
+     *     Check if a cell is empty before places a wall (no seed, no ant).
+     * </p>
+     *
+     * @param x			coordonnée
+     * @param y			abcisse
+     * @param m			vrai si l'on veut poser un mur, faux sinon
+     */
     @Override
     public void setMur(int x, int y, boolean m) {
         Cell cell = this.grid.get(x).get(y);
@@ -45,16 +88,17 @@ public class Grid extends Fourmiliere {
         if (m && cell.isEmpty() ){
             this.grid.get(x).set(y, new Wall(x,y));
         }
-        /*
-        else if (cell instanceof Wall){
-            this.grid.get(x).set(y, new Case(x,y));
-        }
-
-         */
-
-
     }
 
+    /**
+     * Set seed at the designated coordinate.
+     * <p>
+     *     Check if a cell is empty or not contain a wall and ant.
+     * </p>
+     * @param x		coordonnee
+     * @param y		abcisse
+     * @param qte	le nombre de graines que l'on souhaite poser
+     */
     @Override
     public void setQteGraines(int x, int y, int qte) {
         super.setQteGraines(x,y,qte);
@@ -64,6 +108,15 @@ public class Grid extends Fourmiliere {
         }
     }
 
+    /**
+     * Set ant at the designated coordinate.
+     * <p>
+     *     Check if a cell is empty.
+     * </p>
+     *
+     * @param x	    coordonnee
+     * @param y		abcisse
+     */
     @Override
     public void ajouteFourmi(int x, int y){
         super.ajouteFourmi(x,y);
@@ -76,7 +129,16 @@ public class Grid extends Fourmiliere {
     }
 
 
-
+    /**
+     * Draw the grid.
+     * <p>
+     *     The drawing instructions are defined by the two dimension list.
+     * </p>
+     * @param panelDraw
+     *      Support where the grid to be drawing.
+     * @param show
+     *      Define if graphical black grid to be show.
+     */
     public void draw(Graphics2D panelDraw, boolean show) {
         int width = this.getLargeur();
         int height = this.getHauteur();
@@ -89,6 +151,16 @@ public class Grid extends Fourmiliere {
         }
     }
 
+    /**
+     * Update the grid at t+1 step.
+     * <p>
+     *     <ul>
+     *         <li> Update the position of ants. Get ants position before update, erase actual position. </li>
+     *         <li> Update a wall. Check wall changes. </li>
+     *         <li> Update a seeds. Check seed changes. </li>
+     *     </ul>
+     * </p>
+     */
     public void update() {
         LinkedList<Fourmi> beforelesFourmis = this.getLesFourmis();
         super.evolue();
@@ -122,14 +194,17 @@ public class Grid extends Fourmiliere {
             Case antCase = (Case) getCell(x,y);
             antCase.setAnt(f);
         }
-
-
-
     }
 
 
-
-
+    /**
+     * Generate a random grid, with random placement of wall, ant and seed.
+     * Probability value means: 1 chance of value.
+     *
+     * @param probSeed
+     * @param probAnt
+     * @param probWall
+     */
     public void generate(int probSeed, int probAnt, int probWall) {
         int width = this.getLargeur()-2;
         int height = this.getHauteur()-2;
