@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class AnthillSettingsPanel extends JPanel implements ActionListener {
+public class AnthillSettingsPanel extends JPanel {
     public PlayButton play;
     public WenButton loupe;
     public SettingsForm form ;
@@ -13,10 +13,17 @@ public class AnthillSettingsPanel extends JPanel implements ActionListener {
     public AnthillSettingsPanel()
     {
         super();
+
         play=new PlayButton();
         valider=new ValidateButton();
         loupe=new WenButton("loupe");
+        valider.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
 
+                form.setEditable(false);}
+
+        });
         Box horizPLay=Box.createHorizontalBox();
         Box horizLoupe=Box.createHorizontalBox();
         Box horizValider=Box.createHorizontalBox();
@@ -46,11 +53,5 @@ public class AnthillSettingsPanel extends JPanel implements ActionListener {
         frame.setVisible(true);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent actionEvent) {
-        if (actionEvent.getSource()==valider)
-        {
-            form.setEnabled(false);
-        }
-    }
+
 }

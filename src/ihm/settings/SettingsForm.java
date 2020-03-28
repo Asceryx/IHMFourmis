@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class SettingsForm extends JPanel {
+public class SettingsForm extends JPanel implements Deactivatable {
     public FormLabelText parametre;
     public FormLabelText taille;
     public FormLabelText probabiliteG;
@@ -17,7 +17,7 @@ public class SettingsForm extends JPanel {
     public JTextField txt3;
     public JTextField txt4;
     public int val1,val2,val3,val4;
-
+    public PlayButton playButton;
     public SettingsForm()
     {   super();
 
@@ -34,7 +34,6 @@ public class SettingsForm extends JPanel {
         txt2=new JTextField(""+val2);
         txt3=new JTextField(""+val3);
         txt4=new JTextField(""+val4);
-
        box.add(parametre);
        box.add(taille);
        box.add(txt1);
@@ -47,6 +46,14 @@ public class SettingsForm extends JPanel {
        this.add(box);
 
     }
+    @Override
+    public void setEditable(boolean b) {
+        txt1.setEnabled(b);
+        txt2.setEnabled(b);
+        txt3.setEnabled(b);
+        txt4.setEnabled(b);
+    }
+
     public int getVal1()
     {
         return val1;
@@ -79,15 +86,15 @@ public class SettingsForm extends JPanel {
     {
         this.val4=val4;
     }
-    public static void main(String []args)
-    {
-        JFrame frame=new JFrame("test");
-    //    frame.setLayout(new BorderLayout());
-        SettingsForm test=new SettingsForm();
-        frame.add(test,BorderLayout.EAST);
+    public static void main(String []args) {
+        JFrame frame = new JFrame("test");
+        //    frame.setLayout(new BorderLayout());
+        SettingsForm test = new SettingsForm();
+        frame.add(test, BorderLayout.EAST);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setPreferredSize(new Dimension(500,500));
+        frame.setPreferredSize(new Dimension(500, 500));
         frame.pack();
         frame.setVisible(true);
     }
 }
+

@@ -11,8 +11,18 @@ public class WenButton extends JButton  {
 
     public class LoupeAction implements MouseListener {
 
+        private void settingFrame(){
+
+            JFrame frame=new JFrame();
+            frame.setPreferredSize(new Dimension(400,400));
+            frame.setMaximumSize(new Dimension(400,400));
+            frame.setLocationRelativeTo(null);
+            frame.setTitle("Zoom on certain cells ");
+        }
+
         @Override
         public void mouseClicked(MouseEvent e) {
+
             settingFrame();
         }
         @Override
@@ -23,24 +33,17 @@ public class WenButton extends JButton  {
         public void mousePressed(MouseEvent e) {}
         @Override
         public void mouseReleased(MouseEvent e) {}
-        private void settingFrame(){
-          
-            JFrame frame=new JFrame();
-            frame.setPreferredSize(new Dimension(400,400));
-            frame.setMaximumSize(new Dimension(400,400));
-            frame.setLocationRelativeTo(null);
-            frame.setTitle("Zoom on certain cells ");
-        }
 
     }
     public WenButton(String text)
     {
         super();
         Box box =Box.createHorizontalBox();
-        font=new Font("Serif",Font.ITALIC,14);
+        font=new Font("Serif",Font.BOLD,14);
         this.setFont(font);
         this.setText(text);
         this.text=text;
+        this.setContentAreaFilled(false);
         this.addMouseListener(new LoupeAction());
         box.add(this);
     }

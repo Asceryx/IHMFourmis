@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 public class PlayButton extends JButton  {
 ButtonIcon start ;
 ButtonIcon pause;
+SettingsForm form;
 private static boolean isPlay;
 
 public  PlayButton()
@@ -31,11 +32,15 @@ public  PlayButton()
             {
                 btn.setJButtonIcon(false);
                 btn.setIsPlay(false);
+
             }
             else {
                 btn.setJButtonIcon(true);
                 btn.setIsPlay(true);
+
             }
+            if (actionEvent.getSource()==pause)
+            {form.setEditable(false);}
         }
     });
 
@@ -61,6 +66,7 @@ public  PlayButton()
     }
 
 
+
     public static void main(String [] args)
     {
         JFrame test =new JFrame("test");
@@ -70,6 +76,5 @@ public  PlayButton()
         test.pack();
         test.setVisible(true);
     }
-
 
 }
