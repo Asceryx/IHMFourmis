@@ -4,15 +4,49 @@ import model.Fourmi;
 
 import java.awt.*;
 
-public class Cell {
-    public static final int SIZE = 10;
-    private int X;
-    private int Y;
+public abstract class Cell {
+    public static final int SIZE_OF_CELL = 50;
+    protected int x;
+    protected int y;
+    protected boolean border;
 
-    public Cell(int initX, int initY) {
-        this.X = initX;
-        this.Y = initY;
+    public Cell(int x, int y) {
+        this.x = x;
+        this.y = y;
+        this.border = true;
     }
+
+    public Cell(int x, int y, boolean border) {
+        this.x = x;
+        this.y = y;
+        this.border = border;
+    }
+
+    public boolean showBorder() {
+        return this.border;
+    }
+
+    public void setBorder(boolean show) {
+        this.border = show;
+    }
+
+    public abstract boolean isEmpty();
+
+    public void drawCell(Graphics2D grid)
+    {
+
+        if (this.showBorder()) {
+            grid.setColor (new Color(0, 0,0));
+            grid.drawRect(this.x * SIZE_OF_CELL,this.y *SIZE_OF_CELL, SIZE_OF_CELL, SIZE_OF_CELL);
+        }
+        grid.setColor (new Color(255, 255,255));
+    }
+}
+
+
+
+
+    /*
 
     public void paintCell (Graphics2D grid, int seedCount, boolean haveWall) {
         if (seedCount > 0) {
@@ -51,3 +85,4 @@ public class Cell {
         grid.drawOval(this.X, this.Y,  SIZE, SIZE);
     }
 }
+*/
