@@ -38,9 +38,8 @@ public  PlayButton()
                 btn.setJButtonIcon(true);
                 btn.setIsPlay(true);
 
+
             }
-            if (actionEvent.getSource()==pause)
-            {form.setEditable(false);}
         }
     });
 

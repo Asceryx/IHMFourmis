@@ -13,7 +13,7 @@ public class ValidateButton extends JButton implements Deactivatable {
          super();
          Box box=Box.createHorizontalBox();
         /*valider =new JButton("Valider");*/
-        font=new Font("Serif",Font.ITALIC,14);
+        font=new Font("Serif",Font.BOLD,14);
         this.setText("Valider");
         this.setFont(font);
         box.add(this);

@@ -24,6 +24,18 @@ public class AnthillSettingsPanel extends JPanel {
                 form.setEditable(false);}
 
         });
+        play.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if (play.getIsPlay()==false)
+                {
+                    form.setEditable(true);
+                } else {
+                    form.setEditable(false);
+                }
+
+            }
+        });
         Box horizPLay=Box.createHorizontalBox();
         Box horizLoupe=Box.createHorizontalBox();
         Box horizValider=Box.createHorizontalBox();

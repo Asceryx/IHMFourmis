@@ -9,7 +9,7 @@ public class FormLabelText extends JLabel {
     public FormLabelText(String text)
     {
         super();
-        font=new Font("Serif",Font.ITALIC,14);
+        font=new Font("Serif",Font.BOLD,14);
         this.setFont(font);
         this.setText(text);
 
