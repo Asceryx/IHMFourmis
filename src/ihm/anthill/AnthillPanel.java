@@ -55,6 +55,10 @@ public class AnthillPanel extends JPanel implements Runnable {
         this.delayRefresh = delay;
     }
 
+    public GridComponent getGc() {
+        return gc;
+    }
+
     @Override
     public void run() {
         while (true) {

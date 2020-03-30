@@ -32,14 +32,16 @@ public class PlayButton extends JButton implements Runnable,ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(this.playing) {
             this.setIcon(this.pause);
-            this.setText("Pause ");
-            this.anthill.pause(true);
+            this.setText("Pause");
+            this.anthill.getGc().setHide();
+            this.anthill.pause(this.playing);
             this.playing = false;
         }
         else {
             this.setIcon(start);
-            this.setText("Start ");
-            this.anthill.pause(false);
+            this.setText("Start");
+            this.anthill.pause(this.playing);
+            this.anthill.getGc().setShow();
             this.playing = true;
         }
 
