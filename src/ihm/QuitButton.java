@@ -6,8 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class QuitButton extends JButton implements ActionListener {
-    public QuitButton()
-    {
+    public QuitButton() {
         super();
         Box box=Box.createHorizontalBox();
         box.add(Box.createGlue());
@@ -26,7 +25,6 @@ public class QuitButton extends JButton implements ActionListener {
         JFrame frame =new JFrame("test quit");
         Box box=Box.createHorizontalBox();
         box.add(Box.createGlue());
-
         QuitButton quit=new QuitButton();
         box.add(quit);
         box.add(Box.createGlue());

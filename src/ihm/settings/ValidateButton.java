@@ -23,6 +23,5 @@ public class ValidateButton extends JButton implements Deactivatable {
 
     @Override
     public void setEditable(boolean b) {
-
     }
 }

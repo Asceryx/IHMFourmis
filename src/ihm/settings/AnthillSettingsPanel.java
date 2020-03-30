@@ -1,5 +1,7 @@
 package ihm.settings;
 
+import ihm.anthill.AnthillPanel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,11 +12,12 @@ public class AnthillSettingsPanel extends JPanel {
     public WenButton loupe;
     public SettingsForm form ;
     public ValidateButton valider;
-    public AnthillSettingsPanel()
+    public AnthillSettingsPanel(AnthillPanel anthill)
     {
+
         super();
 
-        play=new PlayButton();
+        play=new PlayButton(anthill);
         valider=new ValidateButton();
         loupe=new WenButton("loupe");
         valider.addActionListener(new ActionListener() {
@@ -27,7 +30,7 @@ public class AnthillSettingsPanel extends JPanel {
         play.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                if (play.getIsPlay()==false)
+                if (play.isPlaying()==false)
                 {
                     form.setEditable(true);
                 } else {
@@ -57,12 +60,12 @@ public class AnthillSettingsPanel extends JPanel {
     public static void main(String [] args)
     {
         JFrame frame=new JFrame("test");
-        AnthillSettingsPanel panel=new AnthillSettingsPanel();
+        /*AnthillSettingsPanel panel=new AnthillSettingsPanel();
         frame.add(panel,BorderLayout.EAST);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.pack();
         frame.setPreferredSize(new Dimension(400,400));
-        frame.setVisible(true);
+        frame.setVisible(true);*/
     }
 
 

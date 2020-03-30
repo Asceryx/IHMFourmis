@@ -19,7 +19,7 @@ import static javax.swing.JFrame.EXIT_ON_CLOSE;
  * @author Julien Hayrault
  * @version 1.0
  */
-public class GridComponent extends JComponent implements MouseListener, KeyListener, MouseWheelListener  {
+public class GridComponent extends JComponent implements MouseListener, KeyListener, MouseWheelListener, Hidden  {
     /**
      * Grid which representing the anthill.
      *
@@ -120,11 +120,24 @@ public class GridComponent extends JComponent implements MouseListener, KeyListe
         repaint();
     }
 
+    @Override
+    public void setHide(){
+        this.showGrid = false;
+        repaint();
+    }
+
+    @Override
+    public void setShow(){
+        this.showGrid = true;
+        repaint();
+    }
+
     /**
      * Reset the component.
      */
     public void reset(){
         this.grid = new Grid(width, height);
+        repaint();
     }
 
     /**
@@ -145,6 +158,7 @@ public class GridComponent extends JComponent implements MouseListener, KeyListe
      */
     public void generation(int probSeed, int probAnt,  int probWall) {
         this.grid.generate(probSeed, probAnt,  probWall);
+        repaint();
     }
 
     /**

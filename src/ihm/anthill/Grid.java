@@ -88,6 +88,10 @@ public class Grid extends Fourmiliere {
         if (m && cell.isEmpty() ){
             this.grid.get(x).set(y, new Wall(x,y));
         }
+        else if (!m && cell instanceof Wall)
+        {
+            this.grid.get(x).set(y, new Case(x,y));
+        }
     }
 
     /**
