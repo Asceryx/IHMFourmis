@@ -4,13 +4,12 @@ import ihm.anthill.AnthillPanel;
 import jbutton.ButtonIcon;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
 
-public class PlayButton extends JButton implements Runnable,ActionListener {
+public class PlayButton extends JButton implements ActionListener {
     private ButtonIcon start ;
     private ButtonIcon pause;
     private AnthillPanel anthill;
@@ -49,27 +48,5 @@ public class PlayButton extends JButton implements Runnable,ActionListener {
 
     public boolean isPlaying() {
         return playing;
-    }
-
-    public void setPlaying(boolean playing) {
-        this.playing = playing;
-    }
-
-    public static void main(String [] args)
-    {
-        /*
-        JFrame test =new JFrame("test");
-        PlayButton playButton=new PlayButton();
-        test.add(playButton);
-        test.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        test.pack();
-        test.setVisible(true);
-
-         */
-    }
-
-    @Override
-    public void run() {
-
     }
 }

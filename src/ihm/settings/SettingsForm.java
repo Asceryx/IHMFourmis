@@ -17,9 +17,10 @@ public class SettingsForm extends JPanel implements Deactivatable {
     public JTextField txt3;
     public JTextField txt4;
     public int val1,val2,val3,val4;
-    public PlayButton playButton;
+
     public SettingsForm()
-    {   super();
+    {
+        super();
 
         Box box=Box.createVerticalBox();
        // Box horizValider=Box.createHorizontalBox();
@@ -54,38 +55,22 @@ public class SettingsForm extends JPanel implements Deactivatable {
         txt4.setEnabled(b);
     }
 
-    public int getVal1()
-    {
-        return val1;
+    public int getVal1() {
+        return  Integer.parseInt(txt1.getText());
     }
-    public int getVal2()
-    {
-        return val2;
+    public int getVal2() {
+        return Integer.parseInt(txt2.getText());
     }
     public int getVal3()
     {
-        return val3;
+        return Integer.parseInt(txt3.getText());
     }
     public int getVal4()
     {
         return val4;
     }
-    public void setVal1(int val1)
-    {
-        this.val1=val1;
-    }
-    public void setVal2(int val2)
-    {
-        this.val2=val2;
-    }
-    public void setVal3(int val3)
-    {
-        this.val3=val3;
-    }
-    public void setVal4(int val4)
-    {
-        this.val4=val4;
-    }
+
+
     public static void main(String []args) {
         JFrame frame = new JFrame("test");
         //    frame.setLayout(new BorderLayout());

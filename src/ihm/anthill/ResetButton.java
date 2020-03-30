@@ -31,7 +31,6 @@ public class ResetButton extends JButton implements ActionListener {
         int nbSeed = this.panel.getGrid().getTotalSeed();
         this.LabelAnt.setTextValue(nbAnt);
         this.LabelSeed.setTextValue(nbSeed);
-
     }
 
     @Override

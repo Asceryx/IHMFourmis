@@ -7,38 +7,24 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class AnthillSettingsPanel extends JPanel {
-    public PlayButton play;
-    public WenButton loupe;
-    public SettingsForm form ;
-    public ValidateButton valider;
+public class AnthillSettingsPanel extends JPanel implements ActionListener{
+    private PlayButton play;
+    private WenButton loupe;
+    private SettingsForm form ;
+    private ValidateButton valider;
+    private AnthillPanel anthill;
     public AnthillSettingsPanel(AnthillPanel anthill)
     {
-
         super();
+        this.play=new PlayButton(anthill);
+        this.valider=new ValidateButton();
+        this.loupe=new WenButton("loupe");
+        this.form=new SettingsForm();
+        this.anthill = anthill;
 
-        play=new PlayButton(anthill);
-        valider=new ValidateButton();
-        loupe=new WenButton("loupe");
-        valider.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
+        this.valider.addActionListener(this);
+        this.play.addActionListener(this);
 
-                form.setEditable(false);}
-
-        });
-        play.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                if (play.isPlaying()==false)
-                {
-                    form.setEditable(true);
-                } else {
-                    form.setEditable(false);
-                }
-
-            }
-        });
         Box horizPLay=Box.createHorizontalBox();
         Box horizLoupe=Box.createHorizontalBox();
         Box horizValider=Box.createHorizontalBox();
@@ -46,27 +32,26 @@ public class AnthillSettingsPanel extends JPanel {
         horizPLay.add(play,BorderLayout.CENTER);
         horizValider.add(valider,BorderLayout.CENTER);
         horizLoupe.add(loupe,BorderLayout.CENTER);
-        form=new SettingsForm();
+
         Box box=Box.createVerticalBox();
-  //  box.add(Box.createGlue());
         box.add(horizPLay);
         box.add(horizLoupe);
         box.add(form);
         box.add(horizValider);
-    //    box.add(Box.createGlue());
-       // this.setLayout(gr);
         this.add(box);
     }
-    public static void main(String [] args)
-    {
-        JFrame frame=new JFrame("test");
-        /*AnthillSettingsPanel panel=new AnthillSettingsPanel();
-        frame.add(panel,BorderLayout.EAST);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setPreferredSize(new Dimension(400,400));
-        frame.setVisible(true);*/
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == this.play) {
+            this.form.setEditable(!(this.play.isPlaying()));
+            this.valider.setEditable(!(this.play.isPlaying()));
+        }
+        else if(e.getSource() == this.valider){
+            this.form.setEditable(false);
+            this.anthill.getGc().reset();
+            this.anthill.generation(this.form.getVal1(),this.form.getVal2(),this.form.getVal3());
+            this.form.setEditable(true);
+        }
     }
-
-
 }

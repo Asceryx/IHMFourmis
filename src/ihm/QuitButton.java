@@ -12,6 +12,7 @@ public class QuitButton extends JButton implements ActionListener {
         box.add(Box.createGlue());
         this.setText("Quit");
         this.addActionListener(this);
+        this.setFocusable(false);
     }
 
     @Override
