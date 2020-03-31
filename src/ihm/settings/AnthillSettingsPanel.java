@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class AnthillSettingsPanel extends JPanel implements ActionListener{
+public class AnthillSettingsPanel extends JPanel implements ActionListener {
     private PlayButton play;
     private WenButton loupe;
     private SettingsForm form ;
@@ -44,14 +44,34 @@ public class AnthillSettingsPanel extends JPanel implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.play) {
-            this.form.setEditable(!(this.play.isPlaying()));
-            this.valider.setEditable(!(this.play.isPlaying()));
+            if (this.play.isPlaying()){
+                this.form.deactivate();
+                this.valider.deactivate();
+            }
+            else{
+                this.form.activate();
+                this.valider.activate();
+            }
+
         }
         else if(e.getSource() == this.valider){
-            this.form.setEditable(false);
+            this.form.deactivate();
             this.anthill.getGc().reset();
-            this.anthill.generation(this.form.getVal1(),this.form.getVal2(),this.form.getVal3());
-            this.form.setEditable(true);
+            this.anthill.generation(this.form.getProbaFourmis(),this.form.getProbaGraines(),this.form.getProbaMurs());
+            this.form.activate();
         }
     }
+
+    public static void main(String []args) {
+        JFrame frame = new JFrame("test");
+        AnthillSettingsPanel ap = new AnthillSettingsPanel(null);
+        JPanel p = new JPanel();
+        p.add(ap);
+        frame.add(p);
+
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+    }
+
 }

@@ -3,26 +3,28 @@ package ihm.settings;
 import javax.swing.*;
 import java.awt.*;
 
-// First commit wadie
-public class ValidateButton extends JButton implements Deactivatable {
-    /* public JButton valider;*/
-     private Font font;
+public class ValidateButton extends JButton implements Deactivable {
+    private Font font;
 
-     public ValidateButton()
-     {
-         super();
-         Box box=Box.createHorizontalBox();
-        /*valider =new JButton("Valider");*/
+    public ValidateButton() {
+        super();
+        Box box=Box.createHorizontalBox();
         font=new Font("Serif",Font.BOLD,14);
         this.setText("Valider");
         this.setFont(font);
         box.add(this);
-
-     }
+    }
 
 
     @Override
-    public void setEditable(boolean b) {
-         this.setEnabled(b);
+    public void activate() {
+        this.setEnabled(true);
+
     }
+
+    @Override
+    public void deactivate() {
+        this.setEnabled(false);
+    }
+
 }

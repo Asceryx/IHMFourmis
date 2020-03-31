@@ -2,82 +2,113 @@ package ihm.settings;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class SettingsForm extends JPanel implements Deactivatable {
-    public FormLabelText parametre;
-    public FormLabelText taille;
-    public FormLabelText probabiliteG;
-    public FormLabelText probabiliteF;
-    public FormLabelText probabiliteMur;
-    public ValidateButton valider;
-    public JTextField txt1;
-    public JTextField txt2;
-    public JTextField txt3;
-    public JTextField txt4;
-    public int val1,val2,val3,val4;
+public class SettingsForm extends JPanel implements Deactivable {
+    private final Font fontTitle =new Font("TimesRoman", Font.BOLD,20);
+    private final Font SubTitle =new Font("TimesRoman", Font.ITALIC,12);
+    private FormLabelText probaF;
+    private FormLabelText probaG;
+    private FormLabelText probaM;
+    private JTextField mapSize;
+    private JLabel map_size_describe;
 
-    public SettingsForm()
-    {
+
+    public SettingsForm() {
         super();
+        Box mainBox = Box.createVerticalBox();
+        JLabel map_size_title =  new JLabel("Taille de la fourmillière");
+        map_size_title.setFont(fontTitle);
 
-        Box box=Box.createVerticalBox();
-       // Box horizValider=Box.createHorizontalBox();
-        parametre=new FormLabelText("Paramétres plateau :");
+        this.map_size_describe =  new JLabel("Taille : ");
+        this.map_size_describe.setFont(SubTitle);
+        this.mapSize = new JTextField(6);
 
-        taille =new FormLabelText("Taille du plateau :");
-        probabiliteG=new FormLabelText("Probabilité de graine :");
-        probabiliteF=new FormLabelText("Probabilité de Fourmi :");
-        probabiliteMur=new FormLabelText("Probabilité de mur :");
-        valider=new ValidateButton();
-        txt1=new JTextField(""+val1);
-        txt2=new JTextField(""+val2);
-        txt3=new JTextField(""+val3);
-        txt4=new JTextField(""+val4);
-       box.add(parametre);
-       box.add(taille);
-       box.add(txt1);
-       box.add(probabiliteG);
-       box.add(txt2);
-       box.add(probabiliteF);
-       box.add(txt3);
-       box.add(probabiliteMur);
-       box.add(txt4);
-       this.add(box);
+        Box box_size = Box.createHorizontalBox();
+        box_size.add(map_size_describe);
+        box_size.add(this.mapSize);
 
+        JPanel size = new JPanel(new BorderLayout());
+        size.add(box_size, BorderLayout.WEST);
+
+
+        JPanel size_title = new JPanel(new BorderLayout());
+        size_title.add(map_size_title, BorderLayout.WEST);
+
+
+
+        JLabel map_generate_title = new JLabel("Paramètre de génération");
+        map_generate_title.setFont(fontTitle);
+        this.probaF = new FormLabelText("Probabilité de fourmis", "1 chance sur ", 0);
+        this.probaG = new FormLabelText("Probabilité de graines", "1 chance sur ", 0);
+        this.probaM = new FormLabelText("Probabilité de murs", "1 chance sur ", 0);
+        this.probaF.setAlignmentX(Box.LEFT_ALIGNMENT);
+        this.probaG.setAlignmentX(Box.LEFT_ALIGNMENT);
+        this.probaM.setAlignmentX(Box.LEFT_ALIGNMENT);
+        size_title.setAlignmentX(Box.LEFT_ALIGNMENT);
+        size.setAlignmentX(Box.LEFT_ALIGNMENT);
+        mainBox.add(size_title);
+        mainBox.add(size);
+        mainBox.add(Box.createRigidArea(new Dimension(0,15)));
+
+        mainBox.add(map_generate_title);
+        mainBox.add(Box.createRigidArea(new Dimension(0,15)));
+
+        mainBox.add(this.probaF);
+        mainBox.add(this.probaG);
+        mainBox.add(this.probaM);
+
+        this.add(mainBox);
     }
+
     @Override
-    public void setEditable(boolean b) {
-        txt1.setEnabled(b);
-        txt2.setEnabled(b);
-        txt3.setEnabled(b);
-        txt4.setEnabled(b);
+    public void activate() {
+        this.probaF.activate();
+        this.probaG.activate();
+        this.probaM.activate();
+        this.mapSize.setEnabled(true);
+        this.map_size_describe.setForeground(Color.BLACK);
     }
 
-    public int getVal1() {
-        return  Integer.parseInt(txt1.getText());
+    @Override
+    public void deactivate() {
+        this.probaF.deactivate();
+        this.probaG.deactivate();
+        this.probaM.deactivate();
+        this.mapSize.setEnabled(false);
+        this.map_size_describe.setForeground(Color.GRAY);
+
     }
-    public int getVal2() {
-        return Integer.parseInt(txt2.getText());
+
+    public void setMapSize(int value){
+        this.mapSize.setText(Integer.toString(value));
     }
-    public int getVal3()
-    {
-        return Integer.parseInt(txt3.getText());
+
+    public int getSizeMap(){
+        return Integer.parseInt(this.mapSize.getText());
     }
-    public int getVal4()
-    {
-        return val4;
+
+    public int getProbaFourmis(){
+        return this.probaF.getField();
+    }
+
+    public int getProbaGraines(){
+        return this.probaG.getField();
+    }
+
+    public int getProbaMurs(){
+        return this.probaM.getField();
     }
 
 
     public static void main(String []args) {
         JFrame frame = new JFrame("test");
-        //    frame.setLayout(new BorderLayout());
-        SettingsForm test = new SettingsForm();
-        frame.add(test, BorderLayout.EAST);
+        SettingsForm f = new SettingsForm();
+        JPanel p = new JPanel();
+        p.add(f);
+        f.deactivate();
+        frame.add(p);
+
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setPreferredSize(new Dimension(500, 500));
         frame.pack();
         frame.setVisible(true);
     }
