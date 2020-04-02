@@ -86,9 +86,8 @@ public class GridComponent extends JComponent implements MouseListener, KeyListe
         // width : number of cell in width
         // height : number of cell in height
         // Real size : number of cell * size of ONE cell
-        this.setPreferredSize(new Dimension(width*Cell.SIZE_OF_CELL, height*Cell.SIZE_OF_CELL));
         this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
+        this.setPreferredSize(new Dimension(width*Cell.SIZE_OF_CELL, height*Cell.SIZE_OF_CELL));
         // Creation of a blank grid (no ants, no seeds, no walls)
         this.grid = new Grid(width, height);
         this.width = width;
@@ -136,8 +135,22 @@ public class GridComponent extends JComponent implements MouseListener, KeyListe
      * Reset the component.
      */
     public void reset(){
-        this.grid = new Grid(width, height);
+        this.grid = new Grid(this.width, this.height);
         repaint();
+    }
+
+    public void resize(int size){
+        this.width = size;
+        this.height = size;
+        this.reset();
+    }
+
+    public int getGridWidth(){
+        return this.width;
+    }
+
+    public int getGridHeigth(){
+        return this.height;
     }
 
     /**
@@ -161,6 +174,7 @@ public class GridComponent extends JComponent implements MouseListener, KeyListe
         repaint();
     }
 
+
     /**
      *
      * @return grid that represent anthill.
@@ -178,6 +192,8 @@ public class GridComponent extends JComponent implements MouseListener, KeyListe
         super.paintComponent(g);
         Graphics2D graphics = (Graphics2D) g.create();
         this.grid.draw(graphics, this.showGrid);
+        this.revalidate();
+        this.setPreferredSize(new Dimension(width*Cell.SIZE_OF_CELL, height*Cell.SIZE_OF_CELL));
     }
 
     /**

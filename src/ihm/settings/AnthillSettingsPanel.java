@@ -20,6 +20,7 @@ public class AnthillSettingsPanel extends JPanel implements ActionListener {
         this.valider=new ValidateButton();
         this.loupe=new WenButton("loupe");
         this.form=new SettingsForm();
+        this.form.setMapSize(anthill.getGc().getGridHeigth());
         this.anthill = anthill;
 
         this.valider.addActionListener(this);
@@ -56,7 +57,7 @@ public class AnthillSettingsPanel extends JPanel implements ActionListener {
         }
         else if(e.getSource() == this.valider){
             this.form.deactivate();
-            this.anthill.getGc().reset();
+            this.anthill.resize(this.form.getSizeMap());
             this.anthill.generation(this.form.getProbaFourmis(),this.form.getProbaGraines(),this.form.getProbaMurs());
             this.form.activate();
         }

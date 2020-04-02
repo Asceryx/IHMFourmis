@@ -56,6 +56,7 @@ public class FormLabelText extends JPanel implements Deactivable {
     public void activate() {
         this.field.setEnabled(true);
         this.label_title.setForeground(Color.BLACK);
+        this.label_description.setForeground(Color.BLACK);
     }
 
     @Override

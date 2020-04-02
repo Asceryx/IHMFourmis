@@ -11,6 +11,8 @@ public class AnthillPanel extends JPanel implements Runnable {
     private StatPanel sp;
     private volatile boolean running;
     private int delayRefresh;
+    private int width;
+    private int height;
 
     public AnthillPanel(int width, int height, int delayRefresh) {
         super();
@@ -19,6 +21,8 @@ public class AnthillPanel extends JPanel implements Runnable {
         this.sp = new StatPanel(this.gc);
         this.running = false;
         this.delayRefresh = delayRefresh;
+        this.width=width;
+        this.height=height;
 
 
 
@@ -45,6 +49,10 @@ public class AnthillPanel extends JPanel implements Runnable {
 
     public void generation(int probSeed, int probAnt, int probWall){
         this.gc.generation(probSeed,probAnt,probWall);
+    }
+
+    public void resize(int size){
+        this.gc.resize(size);
     }
 
     public int getDelayRefresh(){

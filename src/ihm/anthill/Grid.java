@@ -214,12 +214,12 @@ public class Grid extends Fourmiliere {
         int height = this.getHauteur()-2;
         for(int i = 1; i<width+1; i++) {
             for (int j = 1; j < height + 1; j++) {
-                if (new Random().nextInt(probSeed) == 0) {
+                if (probSeed > 0 && new Random().nextInt(probSeed) == 0) {
                     int graine = new Random().nextInt(QMAX) + 1;
                     this.setQteGraines(i, j, graine);
-                } else if (new Random().nextInt(probAnt) == 0) {
+                } else if (probAnt > 0 && new Random().nextInt(probAnt) == 0) {
                     this.ajouteFourmi(i, j);
-                } else if (new Random().nextInt(probWall) == 0) {
+                } else if (probWall > 0 && new Random().nextInt(probWall) == 0) {
                     this.setMur(i, j, true);
                 }
             }
