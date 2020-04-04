@@ -192,8 +192,10 @@ public class GridComponent extends JComponent implements MouseListener, KeyListe
         super.paintComponent(g);
         Graphics2D graphics = (Graphics2D) g.create();
         this.grid.draw(graphics, this.showGrid);
-        this.revalidate();
         this.setPreferredSize(new Dimension(width*Cell.SIZE_OF_CELL, height*Cell.SIZE_OF_CELL));
+        Window window = SwingUtilities.windowForComponent(this);
+        window.pack();
+        this.revalidate();
     }
 
     /**
@@ -310,19 +312,4 @@ public class GridComponent extends JComponent implements MouseListener, KeyListe
     @Override
     public void keyTyped(KeyEvent e) {}
 
-
-    public static void main (String [] args){
-        JFrame frame = new JFrame("Drawing Line");
-        JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        GridComponent g = new GridComponent(100,100);
-        g.generation(20,20,20);
-        panel.add(g);
-        frame.add(panel);
-        frame.setDefaultCloseOperation (EXIT_ON_CLOSE);
-        frame.setMinimumSize(new Dimension(200,200));
-        frame.pack() ;
-        frame.setVisible(true);
-    }
 }

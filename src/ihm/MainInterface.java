@@ -12,31 +12,43 @@ public class MainInterface extends JFrame {
         Runnable runnable = new AnthillPanel(11,11,100);
 
         AnthillPanel ah = (AnthillPanel)runnable;
-        AnthillSettingsPanel panel=new AnthillSettingsPanel(ah);
-
-
-        Box box=Box.createHorizontalBox();
-        box.add(Box.createGlue());
+        AnthillSettingsPanel panel=new AnthillSettingsPanel(this, ah);
         QuitButton quit=new QuitButton();
-        box.add(quit);
-        box.add(Box.createGlue());
-        this.add(box, BorderLayout.SOUTH);
 
-        this.add(ah,BorderLayout.WEST);
-        this.add(panel,BorderLayout.EAST);
+
+        JPanel main = new JPanel(new BorderLayout());
+        JPanel content = new JPanel(new BorderLayout());
+        JPanel quitpanel = new JPanel();
+        JPanel ahpanel = new JPanel();
+        JPanel settingpanel = new JPanel();
+
+        ahpanel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+        settingpanel.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
+
+        ahpanel.add(ah);
+        settingpanel.add(panel);
+
+        content.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+        content.setBorder(BorderFactory.createLineBorder(Color.RED));
+        content.add(ahpanel,BorderLayout.WEST);
+        content.add(settingpanel,BorderLayout.EAST);
+
+        quitpanel.add(quit);
+        main.add(content,BorderLayout.CENTER);
+        main.add(quitpanel, BorderLayout.SOUTH);
+
+        this.add(main);
+
 
         this.setDefaultCloseOperation (EXIT_ON_CLOSE);
-        this.setMinimumSize(new Dimension(200,200));
+        //this.setMinimumSize(new Dimension(200,200));
 
-
-
+        this.pack() ;
+        this.setVisible(true);
     }
 
     public static void main (String [] args) {
         MainInterface frame = new MainInterface("test");
 
-
-        frame.pack() ;
-        frame.setVisible(true);
     }
 }

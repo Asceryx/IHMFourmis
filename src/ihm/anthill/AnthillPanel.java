@@ -29,7 +29,6 @@ public class AnthillPanel extends JPanel implements Runnable {
 
         JPanel panel = new JPanel();
         panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        panel.setLayout(new FlowLayout(FlowLayout.LEFT));
         panel.add(this.gc);
 
 

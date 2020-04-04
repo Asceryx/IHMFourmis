@@ -40,15 +40,4 @@ public class StatPanel extends JPanel {
     {
         return nbSeed;
     }
-
-
-    public static void main (String [] args) {
-        JFrame frame = new JFrame("Test StatPanel");
-        GridComponent g = new GridComponent(300,300);
-        g.generation(30,30,30);
-        frame.add(new StatPanel(g));
-        frame.setDefaultCloseOperation (EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-    }
 }

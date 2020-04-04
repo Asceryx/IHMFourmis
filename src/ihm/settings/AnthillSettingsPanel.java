@@ -13,9 +13,11 @@ public class AnthillSettingsPanel extends JPanel implements ActionListener {
     private SettingsForm form ;
     private ValidateButton valider;
     private AnthillPanel anthill;
-    public AnthillSettingsPanel(AnthillPanel anthill)
+    private JFrame frame;
+    public AnthillSettingsPanel(JFrame frame, AnthillPanel anthill)
     {
         super();
+        this.frame = frame;
         this.play=new PlayButton(anthill);
         this.valider=new ValidateButton();
         this.loupe=new WenButton("loupe");
@@ -62,17 +64,4 @@ public class AnthillSettingsPanel extends JPanel implements ActionListener {
             this.form.activate();
         }
     }
-
-    public static void main(String []args) {
-        JFrame frame = new JFrame("test");
-        AnthillSettingsPanel ap = new AnthillSettingsPanel(null);
-        JPanel p = new JPanel();
-        p.add(ap);
-        frame.add(p);
-
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-    }
-
 }
