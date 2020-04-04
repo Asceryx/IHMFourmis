@@ -20,7 +20,7 @@ public class AnthillSettingsPanel extends JPanel implements ActionListener {
         this.frame = frame;
         this.play=new PlayButton(anthill);
         this.valider=new ValidateButton();
-        this.loupe=new WenButton("loupe");
+        this.loupe=new WenButton(anthill);
         this.form=new SettingsForm();
         this.form.setMapSize(anthill.getGc().getGridHeigth());
         this.anthill = anthill;

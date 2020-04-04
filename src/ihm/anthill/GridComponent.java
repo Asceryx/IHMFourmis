@@ -74,6 +74,7 @@ public class GridComponent extends JComponent implements MouseListener, KeyListe
     private boolean[] eventKey;
 
     private boolean activate;
+    private boolean resize;
 
     /**
      * Constructor of GridComponent
@@ -97,6 +98,7 @@ public class GridComponent extends JComponent implements MouseListener, KeyListe
         this.height = height;
         this.showGrid = true;
         this.activate = true;
+        this.resize = false;
         this.eventKey = new boolean[2];
 
 
@@ -141,12 +143,14 @@ public class GridComponent extends JComponent implements MouseListener, KeyListe
      */
     public void reset(){
         this.grid = new Grid(this.width, this.height);
+
         repaint();
     }
 
     public void resize(int size){
         this.width = size;
         this.height = size;
+        this.resize = true;
         this.reset();
     }
 
@@ -198,9 +202,13 @@ public class GridComponent extends JComponent implements MouseListener, KeyListe
         Graphics2D graphics = (Graphics2D) g.create();
         this.grid.draw(graphics, this.showGrid);
         this.setPreferredSize(new Dimension(width*Cell.SIZE_OF_CELL, height*Cell.SIZE_OF_CELL));
-        Window window = SwingUtilities.windowForComponent(this);
-        window.pack();
         this.revalidate();
+        if (this.resize){
+            Window window = SwingUtilities.windowForComponent(this);
+            window.pack();
+            this.resize = false;
+        }
+
     }
 
     /**
