@@ -1,6 +1,7 @@
 package ihm.anthill;
 
 
+import ihm.settings.Deactivable;
 import model.Fourmiliere;
 
 import javax.swing.*;
@@ -19,7 +20,7 @@ import static javax.swing.JFrame.EXIT_ON_CLOSE;
  * @author Julien Hayrault
  * @version 1.0
  */
-public class GridComponent extends JComponent implements MouseListener, KeyListener, MouseWheelListener, Hidden  {
+public class GridComponent extends JComponent implements MouseListener, KeyListener, MouseWheelListener, Hidden, Deactivable {
     /**
      * Grid which representing the anthill.
      *
@@ -72,6 +73,8 @@ public class GridComponent extends JComponent implements MouseListener, KeyListe
      */
     private boolean[] eventKey;
 
+    private boolean activate;
+
     /**
      * Constructor of GridComponent
      * <p>
@@ -93,7 +96,9 @@ public class GridComponent extends JComponent implements MouseListener, KeyListe
         this.width = width;
         this.height = height;
         this.showGrid = true;
+        this.activate = true;
         this.eventKey = new boolean[2];
+
 
         // Listener on the different components (Keyboard, Mouse, Wheel)
         addKeyListener (this);
@@ -220,12 +225,12 @@ public class GridComponent extends JComponent implements MouseListener, KeyListe
         System.out.println(i + " ; " + j);
 
 
-        if (this.eventKey[0] && this.eventKey[1])
+        if (this.eventKey[0] && this.eventKey[1] && this.activate)
         {
             System.out.println("Mouse clicked + Shift pressed");
             this.grid.ajouteFourmi(i,j);
         }
-        else if (this.eventKey[0])
+        else if (this.eventKey[0] && this.activate)
         {
             System.out.println("Mouse clicked");
             boolean bool = this.grid.getMur(i,j);
@@ -276,23 +281,25 @@ public class GridComponent extends JComponent implements MouseListener, KeyListe
      */
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
-        int rotation = e.getWheelRotation () ;
-        System.out.println(e.getX()/Cell.SIZE_OF_CELL + ";"+ e.getY()/Cell.SIZE_OF_CELL);
-        int i = e.getX()/Cell.SIZE_OF_CELL;
-        int j = e.getY()/Cell.SIZE_OF_CELL;
-        Cell cell = this.grid.getCell(i,j);
-        int seed = this.grid.getQteGraines(i,j) + (-rotation);
-        if (seed < Fourmiliere.QMAX && seed >= 0 && !(cell instanceof Wall))
-        {
-            this.grid.setQteGraines(i,j,seed);
+        if (this.activate){
+            int rotation = e.getWheelRotation () ;
+            System.out.println(e.getX()/Cell.SIZE_OF_CELL + ";"+ e.getY()/Cell.SIZE_OF_CELL);
+            int i = e.getX()/Cell.SIZE_OF_CELL;
+            int j = e.getY()/Cell.SIZE_OF_CELL;
+            Cell cell = this.grid.getCell(i,j);
+            int seed = this.grid.getQteGraines(i,j) + (-rotation);
+            if (seed < Fourmiliere.QMAX && seed >= 0 && !(cell instanceof Wall))
+            {
+                this.grid.setQteGraines(i,j,seed);
+            }
+            else if (seed >= Fourmiliere.QMAX && !(cell instanceof Wall)) {
+                this.grid.setQteGraines(i,j,4);
+            }
+            else if (seed < 0 && !(cell instanceof Wall)) {
+                this.grid.setQteGraines(i,j,0);
+            }
+            repaint();
         }
-        else if (seed >= Fourmiliere.QMAX && !(cell instanceof Wall)) {
-            this.grid.setQteGraines(i,j,4);
-        }
-        else if (seed < 0 && !(cell instanceof Wall)) {
-            this.grid.setQteGraines(i,j,0);
-        }
-        repaint();
     }
 
     /**
@@ -312,4 +319,13 @@ public class GridComponent extends JComponent implements MouseListener, KeyListe
     @Override
     public void keyTyped(KeyEvent e) {}
 
+    @Override
+    public void activate() {
+        this.activate = true;
+    }
+
+    @Override
+    public void deactivate() {
+        this.activate = false;
+    }
 }

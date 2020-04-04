@@ -33,6 +33,7 @@ public class PlayButton extends JButton implements ActionListener {
             this.setIcon(this.pause);
             this.setText("Pause");
             this.anthill.getGc().setHide();
+            this.anthill.getGc().deactivate();
             this.anthill.pause(this.playing);
             this.playing = false;
         }
@@ -41,6 +42,7 @@ public class PlayButton extends JButton implements ActionListener {
             this.setText("Start");
             this.anthill.pause(this.playing);
             this.anthill.getGc().setShow();
+            this.anthill.getGc().activate();
             this.playing = true;
         }
 
