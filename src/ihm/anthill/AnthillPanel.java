@@ -75,7 +75,7 @@ public class AnthillPanel extends JPanel implements Runnable {
             this.sp.getNbAnt().setTextValue(this.grid.getTotalAnt());
             if(this.running){
                 this.gc.update();
-                System.out.println("Nb execution :" + total + "status : " + this.running);
+                System.out.println("Nb execution :" + total + " status : " + this.running);
                 try {
                     Thread.sleep(this.delayRefresh);
 
