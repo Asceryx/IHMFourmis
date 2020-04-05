@@ -16,7 +16,7 @@ public class FormLabelText extends JPanel implements Deactivable {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.label_title =new JLabel(title);
         this.label_description = new JLabel(description);
-        SpinnerModel model = new SpinnerNumberModel(defaultValue, 0, 999, 5);
+        SpinnerModel model = new SpinnerNumberModel(defaultValue, 0, 9999, 5);
         this.field = new JSpinner (model);
 
 

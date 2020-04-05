@@ -336,4 +336,5 @@ public class GridComponent extends JComponent implements MouseListener, KeyListe
     public void deactivate() {
         this.activate = false;
     }
+
 }

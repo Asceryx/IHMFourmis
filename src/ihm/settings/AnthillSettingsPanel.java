@@ -20,13 +20,14 @@ public class AnthillSettingsPanel extends JPanel implements ActionListener {
         this.frame = frame;
         this.play=new PlayButton(anthill);
         this.valider=new ValidateButton();
-        this.loupe=new WenButton(anthill);
+        this.loupe=new WenButton();
         this.form=new SettingsForm();
         this.form.setMapSize(anthill.getGc().getGridHeigth());
         this.anthill = anthill;
 
         this.valider.addActionListener(this);
         this.play.addActionListener(this);
+        this.loupe.addActionListener(this);
 
         Box horizPLay=Box.createHorizontalBox();
         Box horizLoupe=Box.createHorizontalBox();
@@ -44,24 +45,55 @@ public class AnthillSettingsPanel extends JPanel implements ActionListener {
         this.add(box);
     }
 
+    private void playEvent(){
+        if (this.play.isPlaying()){
+            this.form.deactivate();
+            this.valider.deactivate();
+        }
+        else{
+            this.form.activate();
+            this.valider.activate();
+        }
+    }
+
+    private void validateEvent(){
+        this.form.deactivate();
+        this.anthill.resize(this.form.getSizeMap());
+        this.anthill.generation(this.form.getProbaGraines(),this.form.getProbaFourmis(),this.form.getProbaMurs());
+        this.form.activate();
+    }
+
+    private void loupeEvent(){
+        boolean selected = this.loupe.getStatus();
+        System.out.println("Action - selected=" + selected + "\n");
+        if (selected){
+            anthill.getGc().setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+            anthill.getGc().deactivate();
+            this.loupe.setForeground(Color.green);
+        }
+        else{
+            anthill.getGc().setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+            if (!(anthill.isRunning())) {
+                anthill.getGc().activate();
+            }
+            this.loupe.setForeground(Color.black);
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.play) {
-            if (this.play.isPlaying()){
-                this.form.deactivate();
-                this.valider.deactivate();
-            }
-            else{
-                this.form.activate();
-                this.valider.activate();
-            }
-
+            this.playEvent();
         }
+
         else if(e.getSource() == this.valider){
-            this.form.deactivate();
-            this.anthill.resize(this.form.getSizeMap());
-            this.anthill.generation(this.form.getProbaFourmis(),this.form.getProbaGraines(),this.form.getProbaMurs());
-            this.form.activate();
+            int validate = JOptionPane.showConfirmDialog(null, "Voulez changer les paramètres ? ", null, JOptionPane.YES_NO_OPTION);
+            if (validate == 0)
+                this.validateEvent();
+        }
+
+        else if(e.getSource() == this.loupe) {
+            this.loupeEvent();
         }
     }
 }
