@@ -9,7 +9,7 @@ import java.awt.*;
 public class MainInterface extends JFrame {
     public MainInterface(String title){
         super(title);
-        Runnable runnable = new AnthillPanel(100,100,300);
+        Runnable runnable = new AnthillPanel(100,100,100);
 
         AnthillPanel ah = (AnthillPanel)runnable;
         AnthillSettingsPanel panel=new AnthillSettingsPanel(this, ah);
@@ -41,7 +41,7 @@ public class MainInterface extends JFrame {
 
 
         this.setDefaultCloseOperation (EXIT_ON_CLOSE);
-        //this.setMinimumSize(new Dimension(200,200));
+        this.setMinimumSize(new Dimension(200,200));
 
         this.pack() ;
         this.setVisible(true);

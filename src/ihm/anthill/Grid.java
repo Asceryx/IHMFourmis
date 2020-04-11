@@ -44,7 +44,6 @@ public class Grid extends Fourmiliere {
         super(width, height);
         this.grid = new ArrayList();
 
-
         for (int i = 0; i < width ; i++) {
             List<Cell> line = new ArrayList();
             for (int j = 0; j <  height  ; j++) {
@@ -170,7 +169,6 @@ public class Grid extends Fourmiliere {
         super.evolue();
         int width = this.getLargeur() - 2;
         int height = this.getHauteur() - 2;
-
         for (int i = 1; i < width + 1; i++) {
             for (int j = 1; j < height + 1; j++) {
                 if (this.murs[i][j]) {

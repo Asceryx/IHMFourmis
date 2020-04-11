@@ -191,19 +191,22 @@ public class Fourmiliere {
 			Fourmi f = ItFourmi.next();
 			int posX = f.getX();
 			int posY = f.getY();
-
 			if (!f.porte() &&  qteGraines[f.getX()][f.getY()]>0){   // la fourmi f prend ?
 				if (Math.random()<Fourmi.probaPrend(compteGrainesVoisines(posX,posY))){
 					f.prend();
 					qteGraines[posX][posY]--;
 				}
 			}
-
 			int deltaX ;  // la fourmi f se déplace.
 			int deltaY ;
+			int cptEssai = 0 ;
 			do {
+				cptEssai++ ;
 				deltaX = posX ;
 				deltaY = posY ;
+				if (cptEssai >= 100) {
+					break;
+				}
 				int tirage  = (int) (Math.random() *7.99999999);
 				switch(tirage) {
 					case 0:
@@ -237,6 +240,7 @@ public class Fourmiliere {
 				}
 			}
 			while(murs[deltaX][deltaY] || fourmis[deltaX][deltaY]);
+
 
 			fourmis[posX][posY]=false;
 			fourmis[deltaX][deltaY]=true;

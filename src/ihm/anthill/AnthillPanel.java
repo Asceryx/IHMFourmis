@@ -68,23 +68,19 @@ public class AnthillPanel extends JPanel implements Runnable {
 
     @Override
     public void run() {
-        int total = 0;
         while (true) {
             this.grid = gc.getGrid();
             this.sp.getNbSeed().setTextValue(this.grid.getTotalSeed());
             this.sp.getNbAnt().setTextValue(this.grid.getTotalAnt());
             if(this.running){
                 this.gc.update();
-                System.out.println("Nb execution :" + total + " status : " + this.running);
                 try {
                     Thread.sleep(this.delayRefresh);
 
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
-                total++;
             }
-
         }
     }
 
