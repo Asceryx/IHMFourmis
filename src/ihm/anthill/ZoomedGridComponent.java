@@ -31,11 +31,11 @@ public class ZoomedGridComponent extends JComponent {
 
 
     public static void main (String [] args) {
-        JFrame frame = new JFrame("Test Anthil");
+        JFrame frame = new JFrame("Test Loupe");
         GridComponent gc = new GridComponent(20,20);
         gc.generation(10,10,50);
         Grid grid = gc.getGrid();
-        ZoomedGridComponent zgc = new ZoomedGridComponent(11,11,3,2,grid);
+        ZoomedGridComponent zgc = new ZoomedGridComponent(11,11,1,1,grid);
         frame.add(zgc);
         frame.pack() ;
         frame.setVisible(true);

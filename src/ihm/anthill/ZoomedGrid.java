@@ -31,18 +31,18 @@ public class ZoomedGrid extends Grid {
     }
 
     public int[] area(){
-        int areaX = this.mouseX - (this.width/2);
-        int areaY = this.mouseY - (this.height/2);
+        int areaX = this.mouseX - (this.width/2) - this.width%2;
+        int areaY = this.mouseY - (this.height/2) - this.height%2;
         int endAreaX = this.mouseX + (this.width/2);
         int endAreaY = this.mouseY + (this.height/2);
 
         if (areaX < 0){
+            endAreaX += Math.abs(areaX);
             areaX = 0;
-            endAreaX += Math.abs(this.mouseX - (width/2));
         }
         if (areaY < 0) {
+            endAreaY += Math.abs(areaY);
             areaY = 0;
-            endAreaY += Math.abs(this.mouseY - (height/2));
         }
 
         if (endAreaX > this.parent.getLargeur()){
@@ -64,11 +64,11 @@ public class ZoomedGrid extends Grid {
         int width = this.getLargeur();
         int height = this.getHauteur();
         int [] area = area();
-        for (int i = area[0] ; i <= area[2]; i++) {
-            for (int j = area[1]; j <= area[3]; j++) {
+        for (int i = area[0] ; i < area[2]; i++) {
+            for (int j = area[1]; j < area[3]; j++) {
                 Cell c = this.parent.getCell(i, j);
                 c.setBorder(show);
-                c.drawZoomCell(panelDraw);
+                c.drawZoomCell(panelDraw, area[0], area[1]);
             }
         }
     }

@@ -3,7 +3,7 @@ import java.awt.*;
 
 public abstract class Cell {
     public static final int SIZE_OF_CELL = 5;
-    public static final int ZOOM_OF_CELL = 60;
+    public static final int ZOOM_OF_CELL = 30;
     protected int x;
     protected int y;
     protected boolean border;
@@ -40,11 +40,11 @@ public abstract class Cell {
         grid.setColor (new Color(255, 255,255));
     }
 
-    public void drawZoomCell(Graphics2D grid)
+    public void drawZoomCell(Graphics2D grid, int translateX, int translateY)
     {
         if (this.showBorder()) {
             grid.setColor (new Color(0, 0,0));
-            grid.drawRect(this.x * ZOOM_OF_CELL ,this.y *ZOOM_OF_CELL , ZOOM_OF_CELL , ZOOM_OF_CELL );
+            grid.drawRect((this.x - translateX) * ZOOM_OF_CELL ,(this.y - translateY)*ZOOM_OF_CELL , ZOOM_OF_CELL , ZOOM_OF_CELL );
         }
         grid.setColor (new Color(255, 255,255));
     }
