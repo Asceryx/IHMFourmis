@@ -12,13 +12,13 @@ public class ZoomedGridComponent extends JComponent {
     private boolean showGrid;
 
 
-    public ZoomedGridComponent(int width, int height, int mouseX, int mouseY, Grid grid) {
+    public ZoomedGridComponent(int width, int height, int mouseX, int mouseY, Grid grid, boolean showGrid) {
         this.grid = new ZoomedGrid(width, height, mouseX, mouseY, grid);
         this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         this.setPreferredSize(new Dimension(width*Cell.ZOOM_OF_CELL, height*Cell.ZOOM_OF_CELL));
         this.width = width;
         this.height = height;
-        this.showGrid = true;
+        this.showGrid = showGrid;
         this.setOpaque(true);
     }
 
@@ -35,7 +35,7 @@ public class ZoomedGridComponent extends JComponent {
         GridComponent gc = new GridComponent(20,20);
         gc.generation(10,10,50);
         Grid grid = gc.getGrid();
-        ZoomedGridComponent zgc = new ZoomedGridComponent(11,11,1,1,grid);
+        ZoomedGridComponent zgc = new ZoomedGridComponent(11,11,1,1,grid, true);
         frame.add(zgc);
         frame.pack() ;
         frame.setVisible(true);

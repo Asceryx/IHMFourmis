@@ -85,7 +85,7 @@ public class AnthillPanel extends JPanel implements Runnable {
     }
 
     public boolean isRunning() {
-        return true;
+        return this.running;
     }
 
     public static void main (String [] args) {

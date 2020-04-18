@@ -74,6 +74,8 @@ public class GridComponent extends JComponent implements MouseListener, KeyListe
     private boolean[] eventKey;
 
     private boolean activate;
+    private boolean zoom;
+    private ZoomedGridComponent zoomcomponent;
     private boolean resize;
 
     /**
@@ -99,6 +101,7 @@ public class GridComponent extends JComponent implements MouseListener, KeyListe
         this.showGrid = true;
         this.activate = true;
         this.resize = false;
+        this.zoom = false;
         this.eventKey = new boolean[2];
 
 
@@ -238,12 +241,24 @@ public class GridComponent extends JComponent implements MouseListener, KeyListe
             System.out.println("Mouse clicked + Shift pressed");
             this.grid.ajouteFourmi(i,j);
         }
+        else if (this.eventKey[0] && this.zoom){
+            System.out.println("Zoom at " + i + " : " + j);
+            System.out.println("Zoom" + this.zoom);
+            JFrame frame = new JFrame("Test Loupe");
+            frame.setBackground(Color.WHITE);
+            ZoomedGridComponent zoomcomponent = new ZoomedGridComponent(11,11,i,j,this.grid, this.showGrid);
+            frame.add(zoomcomponent);
+            frame.pack() ;
+            frame.setVisible(true);
+        }
+
         else if (this.eventKey[0] && this.activate)
         {
             System.out.println("Mouse clicked");
             boolean bool = this.grid.getMur(i,j);
             this.grid.setMur(i,j,!bool);
         }
+
          repaint();
     }
 
@@ -337,4 +352,15 @@ public class GridComponent extends JComponent implements MouseListener, KeyListe
         this.activate = false;
     }
 
+    public void zoomActivate(){
+        this.zoom = true;
+    }
+
+    public void zoomDeactivate(){
+        this.zoom = false;
+    }
+
+    public boolean isZoom() {
+        return zoom;
+    }
 }

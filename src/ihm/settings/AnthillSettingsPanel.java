@@ -69,6 +69,7 @@ public class AnthillSettingsPanel extends JPanel implements ActionListener {
         if (selected){
             anthill.getGc().setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
             anthill.getGc().deactivate();
+            anthill.getGc().zoomActivate();
             this.loupe.setForeground(Color.green);
         }
         else{
@@ -76,6 +77,7 @@ public class AnthillSettingsPanel extends JPanel implements ActionListener {
             if (!(anthill.isRunning())) {
                 anthill.getGc().activate();
             }
+            anthill.getGc().zoomDeactivate();
             this.loupe.setForeground(Color.black);
         }
     }

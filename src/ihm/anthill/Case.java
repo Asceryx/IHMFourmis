@@ -4,22 +4,54 @@ import model.Fourmi;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.util.function.Function;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Case extends Cell {
     private Fourmi containAnt;
     private int containSeed;
+    private List<GraphicSeed> listSeed;
+
+    public class GraphicSeed {
+        public final static int SIZE_OF_SEED = ZOOM_OF_CELL * 1/5;
+        private int angle;
+        private int randX;
+        private int randY;
+
+        public GraphicSeed() {
+            angle = (int)(Math.random() * 360);
+            randX = -GraphicSeed.SIZE_OF_SEED + (int)(Math.random() * ((GraphicSeed.SIZE_OF_SEED - (-GraphicSeed.SIZE_OF_SEED)) + 1));
+            randY = -GraphicSeed.SIZE_OF_SEED + (int)(Math.random() * ((GraphicSeed.SIZE_OF_SEED - (-GraphicSeed.SIZE_OF_SEED)) + 1));
+        }
+
+        public int getAngle() {
+            return angle;
+        }
+
+        public int getRandX() {
+            return randX;
+        }
+
+        public int getRandY() {
+            return randY;
+        }
+    }
 
     public Case(int x, int y) {
         super(x, y);
         this.containAnt = null;
         this.containSeed = 0;
+        this.listSeed = new ArrayList<GraphicSeed>();
     }
 
     public Case(int x, int y, Fourmi containAnt, int containSeed) {
         super(x,y);
         this.containAnt = containAnt;
         this.containSeed = containSeed;
+        this.listSeed = new ArrayList<GraphicSeed>();
+        for (int i = 0; i<containSeed; i++){
+            this.listSeed.add(new GraphicSeed());
+        }
     }
 
     public boolean isContainAnt()
@@ -48,7 +80,14 @@ public class Case extends Cell {
     }
 
     public void setSeed(int count) {
-        this.containSeed = count;
+        while (count < this.containSeed && this.containSeed > 0) {
+            this.listSeed.remove(this.listSeed.size()-1);
+            this.containSeed--;
+        }
+        while (count > this.containSeed) {
+            this.listSeed.add(new GraphicSeed());
+            this.containSeed++;
+        }
     }
 
     public void paintAnt(Graphics grid, Fourmi ant) {
@@ -86,34 +125,10 @@ public class Case extends Cell {
         int Ox = (this.x - translateX)* ZOOM_OF_CELL;
         int Oy = (this.y - translateY) * ZOOM_OF_CELL;
 
-        int OxMax =  Ox + ZOOM_OF_CELL;
-        int OyMax =  Oy + ZOOM_OF_CELL;
 
         int Mx = Ox + ZOOM_OF_CELL/2;
         int My = Oy + ZOOM_OF_CELL/2;
-
-
-
-
-        //grid.fillOval(Ox , Oy  ,  SIZE_OF_ITEM, SIZE_OF_ITEM);
-        //grid.fillOval( OxMax - SIZE_OF_ITEM ,  OyMax - SIZE_OF_ITEM ,  SIZE_OF_ITEM, SIZE_OF_ITEM);
-        //grid.fillOval(Mx - SIZE_OF_ITEM/2 , Oy ,  SIZE_OF_ITEM , SIZE_OF_ITEM);
-        //grid.fillOval(Mx - SIZE_OF_ITEM/2, My - SIZE_OF_ITEM/2,  SIZE_OF_ITEM , SIZE_OF_ITEM);
-
-        /*
-        grid.setColor (Color.RED);
-        grid.drawLine(Ox, My, OxMax, My);
-        grid.setColor (Color.BLUE);
-        grid.drawLine(Mx, Oy , Mx, OyMax);
-        grid.setColor (Color.GREEN);
-        grid.drawLine(Ox, Oy + ZOOM_OF_CELL/4 , OxMax, Oy + ZOOM_OF_CELL/4);
-        grid.drawLine(Ox, Oy + 3*ZOOM_OF_CELL/4 , OxMax, Oy + 3*ZOOM_OF_CELL/4);
-        grid.setColor (Color.magenta);
-        grid.drawLine(Ox + ZOOM_OF_CELL/4, Oy , Ox + ZOOM_OF_CELL/4, OyMax);
-        grid.drawLine(Ox + 3*ZOOM_OF_CELL/4, Oy , Ox + 3*ZOOM_OF_CELL/4, OyMax);
-        grid.setColor (Color.BLACK);
-
-         */
+        
 
         grid.setColor (Color.BLACK);
         grid.drawLine(Mx, My , Ox + 3*ZOOM_OF_CELL/4, Oy + ZOOM_OF_CELL/4);
@@ -145,7 +160,7 @@ public class Case extends Cell {
 
         if (ant.porte()) {
             grid.setColor (Color.BLUE);
-            SIZE_OF_ITEM = ZOOM_OF_CELL-25;
+            SIZE_OF_ITEM = ZOOM_OF_CELL/2;
             grid.drawOval(Mx-SIZE_OF_ITEM/2 ,My-SIZE_OF_ITEM/2   ,  SIZE_OF_ITEM, SIZE_OF_ITEM);
             grid.fillOval(Mx-SIZE_OF_ITEM/2 ,My-SIZE_OF_ITEM/2   ,  SIZE_OF_ITEM, SIZE_OF_ITEM);
         }
@@ -154,31 +169,31 @@ public class Case extends Cell {
     }
 
     public void paintDetailedSeed(Graphics2D grid, int translateX, int translateY ) {
+
         int Ox = (this.x - translateX) * ZOOM_OF_CELL;
         int Oy = (this.y - translateY) * ZOOM_OF_CELL;
         int Mx = Ox + ZOOM_OF_CELL/2;
         int My = Oy + ZOOM_OF_CELL/2;
-        int SIZE_OF_SEED = ZOOM_OF_CELL * 1/5;
-        AffineTransform oldXForm = grid.getTransform();
         grid.setColor (new Color(0, 0,0));
+        AffineTransform oldXForm = grid.getTransform();
+
 
         for (int i = 0; i<this.containSeed; i++) {
-
-            int angle = (int)(Math.random() * 360);
-            int randX = -SIZE_OF_SEED + (int)(Math.random() * ((SIZE_OF_SEED - (-SIZE_OF_SEED)) + 1));
-            int randY = -SIZE_OF_SEED + (int)(Math.random() * ((SIZE_OF_SEED - (-SIZE_OF_SEED)) + 1));
+            GraphicSeed current = this.listSeed.get(i);
+            int angle = current.getAngle();
+            int randX = current.getRandX();
+            int randY = current.getRandY();
             grid.rotate(Math.toRadians(angle), Mx + randX , My + randY);
 
             grid.setColor (new Color(255, 25, 25));
-            grid.fillOval(Mx-SIZE_OF_SEED/2 + randX/2 ,My-2*SIZE_OF_SEED/2 + randY/2  ,  SIZE_OF_SEED, 2*SIZE_OF_SEED);
+            grid.fillOval(Mx-GraphicSeed.SIZE_OF_SEED/2 + randX/2 ,My-2*GraphicSeed.SIZE_OF_SEED/2 + randY/2  ,  GraphicSeed.SIZE_OF_SEED, 2*GraphicSeed.SIZE_OF_SEED);
             grid.setColor (new Color(0, 0,0));
-            grid.drawOval(Mx-SIZE_OF_SEED/2 + randX/2 ,My-2*SIZE_OF_SEED/2 + randY/2  ,  SIZE_OF_SEED, 2*SIZE_OF_SEED);
+            grid.drawOval(Mx-GraphicSeed.SIZE_OF_SEED/2 + randX/2 ,My-2*GraphicSeed.SIZE_OF_SEED/2 + randY/2  ,  GraphicSeed.SIZE_OF_SEED, 2*GraphicSeed.SIZE_OF_SEED);
+            grid.setColor (new Color(255, 255,255));
             grid.setTransform(oldXForm);
         }
         grid.setStroke(new BasicStroke(1));
         grid.setTransform(oldXForm);
-
-
     }
 
     @Override
@@ -190,7 +205,6 @@ public class Case extends Cell {
         if(!this.showBorder()) {
            grid.drawRect((this.x - translateX) * ZOOM_OF_CELL, (this.y - translateY) * ZOOM_OF_CELL, ZOOM_OF_CELL, ZOOM_OF_CELL);
         }
-        //grid.fillRect((this.x - translateX) * ZOOM_OF_CELL+1, (this.y - translateY) * ZOOM_OF_CELL+1,  ZOOM_OF_CELL-1, ZOOM_OF_CELL-1);
 
         if(this.isContainAnt()) {
             paintDetailedAnt(grid,this.containAnt, translateX, translateY);

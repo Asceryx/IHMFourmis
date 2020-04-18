@@ -29,8 +29,9 @@ public class Wall extends Cell {
         int Oy = (this.y - translateY) * ZOOM_OF_CELL;
         int OxMax = Ox + ZOOM_OF_CELL;
         int OyMax = Oy + ZOOM_OF_CELL;
-
         grid.setColor(new Color(0, 0, 0));
+
+
         int dx = 0;
         int dy = 0;
         int offset = 0;
@@ -50,8 +51,5 @@ public class Wall extends Cell {
                 }
             }
         }
-
-
-        //grid.fillRect(this.x * ZOOM_OF_CELL, this.y * ZOOM_OF_CELL,  ZOOM_OF_CELL, ZOOM_OF_CELL);
     }
 }
