@@ -1,4 +1,6 @@
-package ihm.anthill;
+package ihm.anthill.field;
+
+import ihm.anthill.field.Cell;
 
 import java.awt.*;
 
@@ -32,9 +34,9 @@ public class Wall extends Cell {
         grid.setColor(new Color(0, 0, 0));
 
 
-        int dx = 0;
-        int dy = 0;
-        int offset = 0;
+        int dx;
+        int dy;
+        int offset;
 
         for (int i = 0; i * ZOOM_OF_CELL / 6 <= ZOOM_OF_CELL; i++) {
             dy = i * ZOOM_OF_CELL / 6;

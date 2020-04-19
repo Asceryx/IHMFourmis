@@ -1,4 +1,6 @@
-package ihm.anthill;
+package ihm.anthill.gui;
+
+import ihm.anthill.field.Grid;
 
 import javax.swing.JButton;
 import java.awt.*;

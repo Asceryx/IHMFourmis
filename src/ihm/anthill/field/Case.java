@@ -1,4 +1,4 @@
-package ihm.anthill;
+package ihm.anthill.field;
 
 import model.Fourmi;
 
@@ -13,7 +13,7 @@ public class Case extends Cell {
     private List<GraphicSeed> listSeed;
 
     public class GraphicSeed {
-        public final static int SIZE_OF_SEED = ZOOM_OF_CELL * 1/5;
+        public final static int SIZE_OF_SEED = ZOOM_OF_CELL/5;
         private int angle;
         private int randX;
         private int randY;
@@ -41,14 +41,14 @@ public class Case extends Cell {
         super(x, y);
         this.containAnt = null;
         this.containSeed = 0;
-        this.listSeed = new ArrayList<GraphicSeed>();
+        this.listSeed = new ArrayList<>();
     }
 
     public Case(int x, int y, Fourmi containAnt, int containSeed) {
         super(x,y);
         this.containAnt = containAnt;
         this.containSeed = containSeed;
-        this.listSeed = new ArrayList<GraphicSeed>();
+        this.listSeed = new ArrayList<>();
         for (int i = 0; i<containSeed; i++){
             this.listSeed.add(new GraphicSeed());
         }
@@ -199,7 +199,7 @@ public class Case extends Cell {
     @Override
     public void drawZoomCell(Graphics2D grid, int translateX, int translateY) {
         super.drawZoomCell(grid, translateX, translateY);
-        if (this.containSeed > 0) { ;
+        if (this.containSeed > 0) {
             paintDetailedSeed(grid, translateX, translateY);
         }
         if(!this.showBorder()) {

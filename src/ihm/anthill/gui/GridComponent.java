@@ -1,13 +1,15 @@
-package ihm.anthill;
+package ihm.anthill.gui;
 
 
+import ihm.anthill.field.Cell;
+import ihm.anthill.field.Grid;
+import ihm.anthill.field.Wall;
 import ihm.settings.Deactivable;
 import model.Fourmiliere;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import static javax.swing.JFrame.EXIT_ON_CLOSE;
 
 /**
  * <b>Class representing a graphical component for anthill grid.</b>
@@ -85,7 +87,9 @@ public class GridComponent extends JComponent implements MouseListener, KeyListe
      *     The grid is displayed by default. We initialize the different listener.
      * </p>
      * @param width
+     *      Number of cell in width
      * @param height
+     *      Number of cell in height
      */
     public GridComponent(int width, int height) {
         // Size adapted with the number of cell
@@ -198,6 +202,7 @@ public class GridComponent extends JComponent implements MouseListener, KeyListe
     /**
      * Draw a graphical anthill.
      * @param g
+     *      Graphic component
      */
     @Override
     public void paintComponent (Graphics g) {
@@ -291,6 +296,7 @@ public class GridComponent extends JComponent implements MouseListener, KeyListe
      * Release the key. Disabled key event.
      *
      * @param e
+     *      Keyevent
      */
     @Override
     public void keyReleased(KeyEvent e) {
@@ -301,6 +307,7 @@ public class GridComponent extends JComponent implements MouseListener, KeyListe
      * Listening if mouse wheel move and count number of rotation.
      * Each rotation place some seed.
      * @param e
+     *      Keyevent
      */
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {

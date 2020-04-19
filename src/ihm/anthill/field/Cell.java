@@ -1,4 +1,4 @@
-package ihm.anthill;
+package ihm.anthill.field;
 import java.awt.*;
 
 public abstract class Cell {

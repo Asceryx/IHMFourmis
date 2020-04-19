@@ -1,5 +1,9 @@
 package ihm.anthill;
 
+import ihm.anthill.field.Grid;
+import ihm.anthill.gui.GridComponent;
+import ihm.anthill.gui.StatPanel;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -94,7 +98,6 @@ public class AnthillPanel extends JPanel implements Runnable {
 
         // Initilaisation du thread
         Runnable runnable = new AnthillPanel(5,5,100);
-
 
 
         AnthillPanel anthill = (AnthillPanel)runnable;

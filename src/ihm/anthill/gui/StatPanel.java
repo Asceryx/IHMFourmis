@@ -1,9 +1,11 @@
-package ihm.anthill;
+package ihm.anthill.gui;
+
+import ihm.anthill.gui.GridComponent;
+import ihm.anthill.gui.ResetButton;
+import ihm.anthill.gui.StatLabel;
 
 import javax.swing.*;
 import java.awt.BorderLayout;
-
-import static javax.swing.JFrame.EXIT_ON_CLOSE;
 
 public class StatPanel extends JPanel {
     private StatLabel nbAnt;

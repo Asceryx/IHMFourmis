@@ -1,4 +1,4 @@
-package ihm.anthill;
+package ihm.anthill.field;
 
 import model.Fourmi;
 import model.Fourmiliere;
@@ -38,14 +38,16 @@ public class Grid extends Fourmiliere {
      * </p>
      *
      * @param width
+     *      width of Grid
      * @param height
+     *      height of Grid
      */
     public Grid(int width, int height) {
         super(width, height);
-        this.grid = new ArrayList();
+        this.grid = new ArrayList<>();
 
         for (int i = 0; i < width ; i++) {
-            List<Cell> line = new ArrayList();
+            List<Cell> line = new ArrayList<>();
             for (int j = 0; j <  height  ; j++) {
                 if (this.murs[i][j]){
                     line.add(new Wall(i,j));
@@ -62,7 +64,9 @@ public class Grid extends Fourmiliere {
      * Getter of a Cell in  a Grid.
      *
      * @param line
+     *      Line number of a grid
      * @param column
+     *      Column number of a grid
      *
      * @return The cell designated by the coordinates.
      */
@@ -158,17 +162,21 @@ public class Grid extends Fourmiliere {
      * Update the grid at t+1 step.
      * <p>
      *     <ul>
-     *         <li> Update the position of ants. Get ants position before update, erase actual position. </li>
-     *         <li> Update a wall. Check wall changes. </li>
-     *         <li> Update a seeds. Check seed changes. </li>
+     *         <li> Update the position of ants. Get ants position before update, erase it,
+     *         and place to new position. </li>
+     *         <li> Update a wall. Check if wall changes. </li>
+     *         <li> Update a seeds. Check if seed changes. </li>
      *     </ul>
      * </p>
      */
     public void update() {
         LinkedList<Fourmi> beforelesFourmis = this.getLesFourmis();
+        //Evolution of Fourmilliere
         super.evolue();
+        // The edges are only defined as fixed, they are not brought to be modified.
         int width = this.getLargeur() - 2;
         int height = this.getHauteur() - 2;
+        // Updating seed and wall status
         for (int i = 1; i < width + 1; i++) {
             for (int j = 1; j < height + 1; j++) {
                 if (this.murs[i][j]) {
@@ -182,6 +190,7 @@ public class Grid extends Fourmiliere {
                 }
             }
         }
+        //Moving ants : delete ants
         LinkedList<Fourmi> lesFourmis = this.getLesFourmis();
         for (Fourmi fb : beforelesFourmis) {
             int x = fb.getX();
@@ -189,6 +198,7 @@ public class Grid extends Fourmiliere {
             Case antDel = (Case) getCell(x,y);
             antDel.setAnt(null);
         }
+        //Moving ants : place ants
         for (Fourmi f : lesFourmis)
         {
             int x = f.getX();
@@ -204,20 +214,27 @@ public class Grid extends Fourmiliere {
      * Probability value means: 1 chance of value.
      *
      * @param probSeed
+     *      Probality of seed (one chance in probSeed's values)
      * @param probAnt
+     *      Probality of ant (one chance in probAnt's values)
      * @param probWall
+     *      Probality of wall (one chance in probWall's values)
      */
     public void generate(int probSeed, int probAnt, int probWall) {
+        // The edges are only defined as fixed, they are not brought to be modified.
         int width = this.getLargeur()-2;
         int height = this.getHauteur()-2;
         for(int i = 1; i<width+1; i++) {
             for (int j = 1; j < height + 1; j++) {
                 if (probSeed > 0 && new Random().nextInt(probSeed) == 0) {
+                    // generate seed
                     int graine = new Random().nextInt(QMAX) + 1;
                     this.setQteGraines(i, j, graine);
                 } else if (probAnt > 0 && new Random().nextInt(probAnt) == 0) {
+                    // generate ant
                     this.ajouteFourmi(i, j);
                 } else if (probWall > 0 && new Random().nextInt(probWall) == 0) {
+                    // generate wall
                     this.setMur(i, j, true);
                 }
             }

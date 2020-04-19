@@ -1,4 +1,7 @@
-package ihm.anthill;
+package ihm.anthill.field;
+
+import ihm.anthill.field.Cell;
+import ihm.anthill.field.Grid;
 
 import java.awt.*;
 
@@ -11,8 +14,6 @@ public class ZoomedGrid extends Grid {
      * The grid is initialized with a Wall border. The other Cell are initialized empty.
      * </p>
      *
-     * @param width
-     * @param height
      */
     private int width;
     private int height;

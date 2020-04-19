@@ -1,9 +1,11 @@
-package ihm.anthill;
+package ihm.anthill.gui;
+
+import ihm.anthill.field.Cell;
+import ihm.anthill.field.Grid;
+import ihm.anthill.field.ZoomedGrid;
 
 import javax.swing.*;
 import java.awt.*;
-
-import static javax.swing.JFrame.EXIT_ON_CLOSE;
 
 public class ZoomedGridComponent extends JComponent {
     private ZoomedGrid grid;
@@ -15,7 +17,7 @@ public class ZoomedGridComponent extends JComponent {
     public ZoomedGridComponent(int width, int height, int mouseX, int mouseY, Grid grid, boolean showGrid) {
         this.grid = new ZoomedGrid(width, height, mouseX, mouseY, grid);
         this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        this.setPreferredSize(new Dimension(width*Cell.ZOOM_OF_CELL, height*Cell.ZOOM_OF_CELL));
+        this.setPreferredSize(new Dimension(width* Cell.ZOOM_OF_CELL, height*Cell.ZOOM_OF_CELL));
         this.width = width;
         this.height = height;
         this.showGrid = showGrid;

@@ -1,4 +1,4 @@
-package ihm.anthill;
+package ihm.anthill.gui;
 
 import java.awt.Font;
 import java.awt.Label;
