@@ -1,14 +1,17 @@
-package ihm.anthill;
+package ihm.anthill.mainframe;
 
-import ihm.anthill.field.Grid;
-import ihm.anthill.gui.GridComponent;
-import ihm.anthill.gui.StatPanel;
+import ihm.anthill.mainframe.field.Grid;
+import ihm.anthill.mainframe.gui.component.GridComponent;
 
 import javax.swing.*;
 import java.awt.*;
 
-import static javax.swing.JFrame.EXIT_ON_CLOSE;
-
+/**
+ * <b>Panel for Anthill.</b>
+ * <p>
+ * Representation of GridComponent
+ * </p>
+ */
 public class AnthillPanel extends JPanel implements Runnable {
     private Grid grid;
     private GridComponent gc;
@@ -76,8 +79,11 @@ public class AnthillPanel extends JPanel implements Runnable {
             this.grid = gc.getGrid();
             this.sp.getNbSeed().setTextValue(this.grid.getTotalSeed());
             this.sp.getNbAnt().setTextValue(this.grid.getTotalAnt());
-            if(this.running){
+            if (this.running) {
                 this.gc.update();
+                if (this.gc.isZoom() && this.gc.getZoomcomponent() != null) {
+                    this.gc.getZoomcomponent().update();
+                }
                 try {
                     Thread.sleep(this.delayRefresh);
 
@@ -90,29 +96,5 @@ public class AnthillPanel extends JPanel implements Runnable {
 
     public boolean isRunning() {
         return this.running;
-    }
-
-    public static void main (String [] args) {
-        JFrame frame = new JFrame("Test Anthil");
-
-
-        // Initilaisation du thread
-        Runnable runnable = new AnthillPanel(5,5,100);
-
-
-        AnthillPanel anthill = (AnthillPanel)runnable;
-        //Par défault, l'animation ne se lance PAS
-
-        //on lance l'animation
-        anthill.pause(true);
-        //on arrete l'animation
-        //anthill.pause(false);
-
-        frame.add(anthill);
-        frame.setDefaultCloseOperation (EXIT_ON_CLOSE);
-        frame.setMinimumSize(new Dimension(5,5));
-        frame.pack() ;
-        frame.setVisible(true);
-
     }
 }

@@ -16,7 +16,7 @@ public class QuitButton extends JButton implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        int quit = JOptionPane.showConfirmDialog(null, "Voulez vous quitter ? ", null, JOptionPane.YES_NO_OPTION);
+        int quit = JOptionPane.showConfirmDialog(null, "Voulez vous vraiment quitter ? ", "Quitter", JOptionPane.YES_NO_OPTION);
         if (quit == 0)
             System.exit(0);
     }

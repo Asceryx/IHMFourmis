@@ -1,6 +1,6 @@
 package ihm.settings;
 
-import ihm.anthill.AnthillPanel;
+import ihm.anthill.mainframe.AnthillPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,30 +14,30 @@ public class AnthillSettingsPanel extends JPanel implements ActionListener {
     private ValidateButton valider;
     private AnthillPanel anthill;
     private JFrame frame;
-    public AnthillSettingsPanel(JFrame frame, AnthillPanel anthill)
-    {
+
+    public AnthillSettingsPanel(JFrame frame, AnthillPanel anthill) {
         super();
         this.frame = frame;
-        this.play=new PlayButton(anthill);
-        this.valider=new ValidateButton();
-        this.loupe=new WenButton();
-        this.form=new SettingsForm();
-        this.form.setMapSize(anthill.getGc().getGridHeigth());
+        this.play = new PlayButton(anthill);
+        this.valider = new ValidateButton();
+        this.loupe = new WenButton();
+        this.form = new SettingsForm();
+        this.form.setMapSize(anthill.getGc().getGridHeight());
         this.anthill = anthill;
 
         this.valider.addActionListener(this);
         this.play.addActionListener(this);
         this.loupe.addActionListener(this);
 
-        Box horizPLay=Box.createHorizontalBox();
-        Box horizLoupe=Box.createHorizontalBox();
-        Box horizValider=Box.createHorizontalBox();
+        Box horizPLay = Box.createHorizontalBox();
+        Box horizLoupe = Box.createHorizontalBox();
+        Box horizValider = Box.createHorizontalBox();
 
-        horizPLay.add(play,BorderLayout.CENTER);
-        horizValider.add(valider,BorderLayout.CENTER);
-        horizLoupe.add(loupe,BorderLayout.CENTER);
+        horizPLay.add(play, BorderLayout.CENTER);
+        horizValider.add(valider, BorderLayout.CENTER);
+        horizLoupe.add(loupe, BorderLayout.CENTER);
 
-        Box box=Box.createVerticalBox();
+        Box box = Box.createVerticalBox();
         box.add(horizPLay);
         box.add(horizLoupe);
         box.add(form);

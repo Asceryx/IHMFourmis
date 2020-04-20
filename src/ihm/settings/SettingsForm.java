@@ -4,8 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class SettingsForm extends JPanel implements Deactivable {
-    private final Font fontTitle =new Font("TimesRoman", Font.BOLD,20);
-    private final Font SubTitle =new Font("TimesRoman", Font.ITALIC,12);
+    private final Font fontTitle = new Font("TimesRoman", Font.BOLD, 20);
+    private final Font SubTitle = new Font("TimesRoman", Font.ITALIC, 12);
     private FormLabelText probaF;
     private FormLabelText probaG;
     private FormLabelText probaM;
@@ -97,20 +97,6 @@ public class SettingsForm extends JPanel implements Deactivable {
 
     public int getProbaMurs(){
         return this.probaM.getField();
-    }
-
-
-    public static void main(String []args) {
-        JFrame frame = new JFrame("test");
-        SettingsForm f = new SettingsForm();
-        JPanel p = new JPanel();
-        p.add(f);
-        f.deactivate();
-        frame.add(p);
-
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
     }
 }
 

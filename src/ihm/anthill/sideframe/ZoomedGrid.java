@@ -1,7 +1,7 @@
-package ihm.anthill.field;
+package ihm.anthill.sideframe;
 
-import ihm.anthill.field.Cell;
-import ihm.anthill.field.Grid;
+import ihm.anthill.mainframe.field.Cell;
+import ihm.anthill.mainframe.field.Grid;
 
 import java.awt.*;
 
@@ -13,7 +13,6 @@ public class ZoomedGrid extends Grid {
      * Initialization is based on array created in parent class Fourmiliere.
      * The grid is initialized with a Wall border. The other Cell are initialized empty.
      * </p>
-     *
      */
     private int width;
     private int height;
@@ -31,13 +30,13 @@ public class ZoomedGrid extends Grid {
 
     }
 
-    public int[] area(){
-        int areaX = this.mouseX - (this.width/2) - this.width%2;
-        int areaY = this.mouseY - (this.height/2) - this.height%2;
-        int endAreaX = this.mouseX + (this.width/2);
-        int endAreaY = this.mouseY + (this.height/2);
+    public int[] area() {
+        int areaX = this.mouseX - (this.width / 2) - this.width % 2;
+        int areaY = this.mouseY - (this.height / 2) - this.height % 2;
+        int endAreaX = this.mouseX + (this.width / 2);
+        int endAreaY = this.mouseY + (this.height / 2);
 
-        if (areaX < 0){
+        if (areaX < 0) {
             endAreaX += Math.abs(areaX);
             areaX = 0;
         }
@@ -46,12 +45,12 @@ public class ZoomedGrid extends Grid {
             areaY = 0;
         }
 
-        if (endAreaX > this.parent.getLargeur()){
+        if (endAreaX > this.parent.getLargeur()) {
             areaX -= (endAreaX - this.parent.getLargeur());
             endAreaX = this.parent.getLargeur();
         }
 
-        if (endAreaY > this.parent.getHauteur()){
+        if (endAreaY > this.parent.getHauteur()) {
             areaY -= (endAreaY - this.parent.getHauteur());
             endAreaY = this.parent.getHauteur();
         }
@@ -62,6 +61,7 @@ public class ZoomedGrid extends Grid {
 
     @Override
     public void draw(Graphics2D panelDraw, boolean show) {
+        System.out.println("Child draw");
         int width = this.getLargeur();
         int height = this.getHauteur();
         int [] area = area();

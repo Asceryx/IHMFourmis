@@ -1,6 +1,6 @@
 package ihm.settings;
 
-import ihm.anthill.AnthillPanel;
+import ihm.anthill.mainframe.AnthillPanel;
 import jbutton.ButtonIcon;
 
 import javax.swing.*;

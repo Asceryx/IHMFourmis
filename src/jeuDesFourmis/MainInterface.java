@@ -1,19 +1,20 @@
-package ihm;
+package jeuDesFourmis;
 
-import ihm.anthill.AnthillPanel;
+import ihm.QuitButton;
+import ihm.anthill.mainframe.AnthillPanel;
 import ihm.settings.AnthillSettingsPanel;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class MainInterface extends JFrame {
-    public MainInterface(String title){
+    public MainInterface(String title) {
         super(title);
-        Runnable runnable = new AnthillPanel(100,100,100);
+        Runnable runnable = new AnthillPanel(100, 100, 400);
 
-        AnthillPanel ah = (AnthillPanel)runnable;
-        AnthillSettingsPanel panel=new AnthillSettingsPanel(this, ah);
-        QuitButton quit=new QuitButton();
+        AnthillPanel ah = (AnthillPanel) runnable;
+        AnthillSettingsPanel panel = new AnthillSettingsPanel(this, ah);
+        QuitButton quit = new QuitButton();
 
 
         JPanel main = new JPanel(new BorderLayout());
@@ -30,25 +31,27 @@ public class MainInterface extends JFrame {
 
         content.setBorder(BorderFactory.createLineBorder(Color.BLUE));
         content.setBorder(BorderFactory.createLineBorder(Color.RED));
-        content.add(ahpanel,BorderLayout.WEST);
-        content.add(settingpanel,BorderLayout.EAST);
+        content.add(ahpanel, BorderLayout.WEST);
+        content.add(settingpanel, BorderLayout.EAST);
 
         quitpanel.add(quit);
-        main.add(content,BorderLayout.CENTER);
+        main.add(content, BorderLayout.CENTER);
         main.add(quitpanel, BorderLayout.SOUTH);
 
         this.add(main);
 
 
-        this.setDefaultCloseOperation (EXIT_ON_CLOSE);
-        this.setMinimumSize(new Dimension(200,200));
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setMinimumSize(new Dimension(200, 200));
 
-        this.pack() ;
+        this.pack();
         this.setVisible(true);
+
     }
 
-    public static void main (String [] args) {
-        MainInterface frame = new MainInterface("test");
+    public static void main(String[] args) {
+        MainInterface frame = new MainInterface("Jeu des fourmis");
+        frame.setLocationRelativeTo(frame.getParent());
 
     }
 }

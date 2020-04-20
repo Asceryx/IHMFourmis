@@ -1,9 +1,12 @@
-package ihm.anthill.gui;
+package ihm.anthill.mainframe.gui.component;
 
 
-import ihm.anthill.field.Cell;
-import ihm.anthill.field.Grid;
-import ihm.anthill.field.Wall;
+import ihm.anthill.mainframe.field.Cell;
+import ihm.anthill.mainframe.field.Grid;
+import ihm.anthill.mainframe.field.Wall;
+import ihm.anthill.mainframe.gui.Hidden;
+import ihm.anthill.sideframe.ZoomedFrame;
+import ihm.anthill.sideframe.ZoomedGridComponent;
 import ihm.settings.Deactivable;
 import model.Fourmiliere;
 
@@ -33,8 +36,8 @@ public class GridComponent extends JComponent implements MouseListener, KeyListe
     /**
      * Width of a grid.
      * <p>
-     *     Caution : real size of the grid is :
-     *     (width * sizeofCell) X (height * sizeofCellà
+     * Caution : real size of the grid is :
+     * (width * sizeofCell) X (height * sizeofCellà
      * </p>
      *
      * @see Cell
@@ -44,8 +47,8 @@ public class GridComponent extends JComponent implements MouseListener, KeyListe
     /**
      * Height of a grid.
      * <p>
-     *     Caution : real size of the grid is :
-     *     (width * sizeofCell) X (height * sizeofCellà
+     * Caution : real size of the grid is :
+     * (width * sizeofCell) X (height * sizeofCellà
      * </p>
      *
      * @see Cell
@@ -55,11 +58,11 @@ public class GridComponent extends JComponent implements MouseListener, KeyListe
     /**
      * Define if the grid must be show/hide
      * <p>
-     *     Caution : real size of the grid is :
-     *     (width * sizeofCell) X (height * sizeofCellà
+     * Caution : real size of the grid is :
+     * (width * sizeofCell) X (height * sizeofCellà
      * </p>
      *
-     * @see GridComponent#setShowGrid(boolean)
+     * @see GridComponent
      */
     private boolean showGrid;
 
@@ -75,21 +78,32 @@ public class GridComponent extends JComponent implements MouseListener, KeyListe
      */
     private boolean[] eventKey;
 
+    /**
+     * Define if a grid interaction is possible.
+     */
     private boolean activate;
+    /**
+     * Define if zoom is activate.
+     */
     private boolean zoom;
+    /**
+     * Zoom component.
+     */
     private ZoomedGridComponent zoomcomponent;
+    /**
+     * Define if resize is available (initialization : false)
+     */
     private boolean resize;
 
     /**
      * Constructor of GridComponent
      * <p>
-     *     When the object is constructed, the size is suitable to the content to be displayed.
-     *     The grid is displayed by default. We initialize the different listener.
+     * When the object is constructed, the size is suitable to the content to be displayed.
+     * The grid is displayed by default. We initialize the different listener.
      * </p>
-     * @param width
-     *      Number of cell in width
-     * @param height
-     *      Number of cell in height
+     *
+     * @param width  Number of cell in width
+     * @param height Number of cell in height
      */
     public GridComponent(int width, int height) {
         // Size adapted with the number of cell
@@ -97,7 +111,7 @@ public class GridComponent extends JComponent implements MouseListener, KeyListe
         // height : number of cell in height
         // Real size : number of cell * size of ONE cell
         this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        this.setPreferredSize(new Dimension(width*Cell.SIZE_OF_CELL, height*Cell.SIZE_OF_CELL));
+        this.setPreferredSize(new Dimension(width * Cell.SIZE_OF_CELL, height * Cell.SIZE_OF_CELL));
         // Creation of a blank grid (no ants, no seeds, no walls)
         this.grid = new Grid(width, height);
         this.width = width;
@@ -110,9 +124,9 @@ public class GridComponent extends JComponent implements MouseListener, KeyListe
 
 
         // Listener on the different components (Keyboard, Mouse, Wheel)
-        addKeyListener (this);
+        addKeyListener(this);
         addMouseListener(this);
-        addMouseWheelListener (this) ;
+        addMouseWheelListener(this);
 
         // Allows the display of component
         this.setOpaque(true);
@@ -123,24 +137,19 @@ public class GridComponent extends JComponent implements MouseListener, KeyListe
     }
 
     /**
-     * Show/Hide the grid on component.
-     * @param show
-     *      Define if grid must be show or not.
-     *
+     * Hide the grid on component.
      */
-    public void setShowGrid(boolean show){
-        this.showGrid = show;
-        repaint();
-    }
-
     @Override
-    public void setHide(){
+    public void setHide() {
         this.showGrid = false;
         repaint();
     }
 
+    /**
+     * Show the grid on component.
+     */
     @Override
-    public void setShow(){
+    public void setShow() {
         this.showGrid = true;
         repaint();
     }
@@ -148,24 +157,39 @@ public class GridComponent extends JComponent implements MouseListener, KeyListe
     /**
      * Reset the component.
      */
-    public void reset(){
+    public void reset() {
         this.grid = new Grid(this.width, this.height);
 
         repaint();
     }
 
-    public void resize(int size){
+    /**
+     * Resize the component.
+     *
+     * @param size Size of component.
+     */
+    public void resize(int size) {
         this.width = size;
         this.height = size;
         this.resize = true;
         this.reset();
     }
 
-    public int getGridWidth(){
+    /**
+     * Get width of grid.
+     *
+     * @return width of grid.
+     */
+    public int getGridWidth() {
         return this.width;
     }
 
-    public int getGridHeigth(){
+    /**
+     * Get height of grid.
+     *
+     * @return height of grid.
+     */
+    public int getGridHeight() {
         return this.height;
     }
 
@@ -178,40 +202,37 @@ public class GridComponent extends JComponent implements MouseListener, KeyListe
      *         <li>probWall means there is a 1 in probWall chance of wall spawning.</li>
      *     </ul>
      * </p>
-     * @param probSeed
-     *      Probability to spawn seeds
-     * @param probAnt
-     *      Probability to spawn ants
-     * @param probWall
-     *      Probability to spawn walls
+     *
+     * @param probSeed Probability to spawn seeds
+     * @param probAnt  Probability to spawn ants
+     * @param probWall Probability to spawn walls
      */
-    public void generation(int probSeed, int probAnt,  int probWall) {
-        this.grid.generate(probSeed, probAnt,  probWall);
+    public void generation(int probSeed, int probAnt, int probWall) {
+        this.grid.generate(probSeed, probAnt, probWall);
         repaint();
     }
 
 
     /**
-     *
      * @return grid that represent anthill.
      */
-    public Grid getGrid(){
+    public Grid getGrid() {
         return this.grid;
     }
 
     /**
      * Draw a graphical anthill.
-     * @param g
-     *      Graphic component
+     *
+     * @param g Graphic component
      */
     @Override
-    public void paintComponent (Graphics g) {
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D graphics = (Graphics2D) g.create();
         this.grid.draw(graphics, this.showGrid);
-        this.setPreferredSize(new Dimension(width*Cell.SIZE_OF_CELL, height*Cell.SIZE_OF_CELL));
+        this.setPreferredSize(new Dimension(width * Cell.SIZE_OF_CELL, height * Cell.SIZE_OF_CELL));
         this.revalidate();
-        if (this.resize){
+        if (this.resize) {
             Window window = SwingUtilities.windowForComponent(this);
             window.pack();
             this.resize = false;
@@ -224,11 +245,12 @@ public class GridComponent extends JComponent implements MouseListener, KeyListe
      * <p>
      *     <ul>
      *         <li>If only click : create a wall. </li>
+     *         <li>If zoom button push and click : Zoom</li>
      *         <li>If click + shift : create a ant. </li>
      *     </ul>
      * </p>
-     * @param e
-     *      Event of mouse
+     *
+     * @param e Event of mouse
      */
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -238,39 +260,27 @@ public class GridComponent extends JComponent implements MouseListener, KeyListe
 
         int i = mousex / Cell.SIZE_OF_CELL;
         int j = mousey / Cell.SIZE_OF_CELL;
-        System.out.println(i + " ; " + j);
 
 
-        if (this.eventKey[0] && this.eventKey[1] && this.activate)
-        {
-            System.out.println("Mouse clicked + Shift pressed");
-            this.grid.ajouteFourmi(i,j);
-        }
-        else if (this.eventKey[0] && this.zoom){
-            System.out.println("Zoom at " + i + " : " + j);
-            System.out.println("Zoom" + this.zoom);
-            JFrame frame = new JFrame("Test Loupe");
-            frame.setBackground(Color.WHITE);
-            ZoomedGridComponent zoomcomponent = new ZoomedGridComponent(11,11,i,j,this.grid, this.showGrid);
-            frame.add(zoomcomponent);
-            frame.pack() ;
-            frame.setVisible(true);
+        if (this.eventKey[0] && this.eventKey[1] && this.activate) {
+            this.grid.ajouteFourmi(i, j);
+        } else if (this.eventKey[0] && this.zoom) {
+            String title = "Zoom en " + i + " : " + j;
+            ZoomedFrame z = new ZoomedFrame(title, i, j, this.grid, this.showGrid);
+            z.setLocationRelativeTo(z.getParent());
+            zoomcomponent = z.getZoom();
+        } else if (this.eventKey[0] && this.activate) {
+            boolean bool = this.grid.getMur(i, j);
+            this.grid.setMur(i, j, !bool);
         }
 
-        else if (this.eventKey[0] && this.activate)
-        {
-            System.out.println("Mouse clicked");
-            boolean bool = this.grid.getMur(i,j);
-            this.grid.setMur(i,j,!bool);
-        }
-
-         repaint();
+        repaint();
     }
 
     /**
      * Mouse release event, deactivate enabling mouse click
-     * @param e
-     *      Event of mouse
+     *
+     * @param e Event of mouse
      */
     @Override
     public void mouseReleased(MouseEvent e) {
@@ -281,22 +291,20 @@ public class GridComponent extends JComponent implements MouseListener, KeyListe
     /**
      * Listening if Shift are pressed.
      *
-     * @param e
-     *      Keyboard event.
+     * @param e Keyboard event.
      */
     @Override
     public void keyPressed(KeyEvent e) {
         System.out.println("Shift pressed");
         if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
-            this.eventKey[1] =true;
+            this.eventKey[1] = true;
         }
     }
 
     /**
      * Release the key. Disabled key event.
      *
-     * @param e
-     *      Keyevent
+     * @param e Keyevent
      */
     @Override
     public void keyReleased(KeyEvent e) {
@@ -306,27 +314,24 @@ public class GridComponent extends JComponent implements MouseListener, KeyListe
     /**
      * Listening if mouse wheel move and count number of rotation.
      * Each rotation place some seed.
-     * @param e
-     *      Keyevent
+     *
+     * @param e Keyevent
      */
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
-        if (this.activate){
-            int rotation = e.getWheelRotation () ;
-            System.out.println(e.getX()/Cell.SIZE_OF_CELL + ";"+ e.getY()/Cell.SIZE_OF_CELL);
-            int i = e.getX()/Cell.SIZE_OF_CELL;
-            int j = e.getY()/Cell.SIZE_OF_CELL;
-            Cell cell = this.grid.getCell(i,j);
-            int seed = this.grid.getQteGraines(i,j) + (-rotation);
-            if (seed < Fourmiliere.QMAX && seed >= 0 && !(cell instanceof Wall))
-            {
-                this.grid.setQteGraines(i,j,seed);
-            }
-            else if (seed >= Fourmiliere.QMAX && !(cell instanceof Wall)) {
-                this.grid.setQteGraines(i,j,4);
-            }
-            else if (seed < 0 && !(cell instanceof Wall)) {
-                this.grid.setQteGraines(i,j,0);
+        if (this.activate) {
+            int rotation = e.getWheelRotation();
+            System.out.println(e.getX() / Cell.SIZE_OF_CELL + ";" + e.getY() / Cell.SIZE_OF_CELL);
+            int i = e.getX() / Cell.SIZE_OF_CELL;
+            int j = e.getY() / Cell.SIZE_OF_CELL;
+            Cell cell = this.grid.getCell(i, j);
+            int seed = this.grid.getQteGraines(i, j) + (-rotation);
+            if (seed < Fourmiliere.QMAX && seed >= 0 && !(cell instanceof Wall)) {
+                this.grid.setQteGraines(i, j, seed);
+            } else if (seed >= Fourmiliere.QMAX && !(cell instanceof Wall)) {
+                this.grid.setQteGraines(i, j, 4);
+            } else if (seed < 0 && !(cell instanceof Wall)) {
+                this.grid.setQteGraines(i, j, 0);
             }
             repaint();
         }
@@ -335,39 +340,73 @@ public class GridComponent extends JComponent implements MouseListener, KeyListe
     /**
      * Update grid and repaint graphics.
      */
-    public void update(){
+    public void update() {
         this.grid.update();
         repaint();
+        revalidate();
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {}
-    @Override
-    public void mouseEntered(MouseEvent e) {}
-    @Override
-    public void mouseExited(MouseEvent e) {}
-    @Override
-    public void keyTyped(KeyEvent e) {}
+    public void mousePressed(MouseEvent e) {
+    }
 
+    @Override
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+
+    /**
+     * Activate grid interaction (mouse, keyboard...)
+     */
     @Override
     public void activate() {
         this.activate = true;
     }
 
+    /**
+     * Deactivate grid interaction (mouse, keyboard...)
+     */
     @Override
     public void deactivate() {
         this.activate = false;
     }
 
-    public void zoomActivate(){
+    /**
+     * Activate zoom.
+     */
+    public void zoomActivate() {
         this.zoom = true;
     }
 
-    public void zoomDeactivate(){
+    /**
+     * Deactivate zoom.
+     */
+    public void zoomDeactivate() {
         this.zoom = false;
     }
 
+    /**
+     * Get if zoom is activate/deactivate.
+     *
+     * @return boolean
+     */
     public boolean isZoom() {
-        return zoom;
+        return this.zoom;
+    }
+
+    /**
+     * Get ZoomComponent.
+     *
+     * @return ZoomGridComponent
+     */
+    public ZoomedGridComponent getZoomcomponent() {
+        return zoomcomponent;
     }
 }

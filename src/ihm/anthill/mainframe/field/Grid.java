@@ -1,4 +1,4 @@
-package ihm.anthill.field;
+package ihm.anthill.mainframe.field;
 
 import model.Fourmi;
 import model.Fourmiliere;
@@ -147,6 +147,7 @@ public class Grid extends Fourmiliere {
      *      Define if graphical black grid to be show.
      */
     public void draw(Graphics2D panelDraw, boolean show) {
+        System.out.println("Parent draw");
         int width = this.getLargeur();
         int height = this.getHauteur();
         for (int i = 0; i < width; i++) {
