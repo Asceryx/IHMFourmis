@@ -13,7 +13,7 @@ public class MainInterface extends JFrame {
         Runnable runnable = new AnthillPanel(100, 100, 400);
 
         AnthillPanel ah = (AnthillPanel) runnable;
-        AnthillSettingsPanel panel = new AnthillSettingsPanel(this, ah);
+        AnthillSettingsPanel panel = new AnthillSettingsPanel(ah);
         QuitButton quit = new QuitButton();
 
 

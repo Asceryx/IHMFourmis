@@ -7,17 +7,45 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * <b>Panel for settings.</b>
+ * <p>
+ * Panel to set up and interact the elements of the anthill :
+ *     <ul>
+ *         <li>Running/Stopping the animation.</li>
+ *         <li>Zooming in anthill.</li>
+ *         <li>Getting and apply settings in the anthill.</li>
+ *     </ul>
+ * </p>
+ */
 public class AnthillSettingsPanel extends JPanel implements ActionListener {
-    private PlayButton play;
-    private WenButton loupe;
-    private SettingsForm form ;
-    private ValidateButton valider;
-    private AnthillPanel anthill;
-    private JFrame frame;
+    /**
+     * Button to run the animation.
+     */
+    private final PlayButton play;
+    /**
+     * Button to activate a zoom
+     */
+    private final WenButton loupe;
+    /**
+     * Form to set up the anthill (size, number of ants...)
+     */
+    private final SettingsForm form;
+    /**
+     * Validate button to get and apply setting up of anthill.
+     */
+    private final ValidateButton valider;
+    /**
+     * anthill object.
+     */
+    private final AnthillPanel anthill;
 
-    public AnthillSettingsPanel(JFrame frame, AnthillPanel anthill) {
+    /**
+     *
+     * @param anthill
+     */
+    public AnthillSettingsPanel(AnthillPanel anthill) {
         super();
-        this.frame = frame;
         this.play = new PlayButton(anthill);
         this.valider = new ValidateButton();
         this.loupe = new WenButton();
@@ -49,8 +77,7 @@ public class AnthillSettingsPanel extends JPanel implements ActionListener {
         if (this.play.isPlaying()){
             this.form.deactivate();
             this.valider.deactivate();
-        }
-        else{
+        } else{
             this.form.activate();
             this.valider.activate();
         }
@@ -71,8 +98,7 @@ public class AnthillSettingsPanel extends JPanel implements ActionListener {
             anthill.getGc().deactivate();
             anthill.getGc().zoomActivate();
             this.loupe.setForeground(Color.green);
-        }
-        else{
+        } else{
             anthill.getGc().setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
             if (!(anthill.isRunning())) {
                 anthill.getGc().activate();
@@ -86,15 +112,11 @@ public class AnthillSettingsPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.play) {
             this.playEvent();
-        }
-
-        else if(e.getSource() == this.valider){
+        } else if(e.getSource() == this.valider){
             int validate = JOptionPane.showConfirmDialog(null, "Voulez changer les paramètres ? ", null, JOptionPane.YES_NO_OPTION);
             if (validate == 0)
                 this.validateEvent();
-        }
-
-        else if(e.getSource() == this.loupe) {
+        } else if(e.getSource() == this.loupe) {
             this.loupeEvent();
         }
     }
